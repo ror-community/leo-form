@@ -1,0 +1,50 @@
+{
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "HorizontalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/name"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/types"
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/established"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/labels"
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "Label": "Location ID",
+            "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+            "options": {
+                "locationID": true
+              }
+          },
+          {
+            "type": "Control",
+            "label": "Geonames City",
+            "scope": "#/properties/addresses/properties/geonames_city/properties/city"
+          }
+        ]
+      }
+    ]
+  }
+  
