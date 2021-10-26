@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="6">
+    <v-col cols="8">
       <json-forms
         v-bind:data="example.input.data"
         v-bind:schema="example.input.schema"
@@ -9,7 +9,7 @@
         @change="onChange"
       />
     </v-col>
-    <v-col cols="6">
+    <v-col cols="4">
       <pre>{{ JSON.stringify(data, null, 2) }}</pre>
     </v-col>
   </v-row>

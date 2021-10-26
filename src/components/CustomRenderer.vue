@@ -147,38 +147,43 @@ export const customRenderer = defineComponent({
       const rootData = this.jsonforms?.core?.data;
       fetch(url.toString()).then((response) => {
         response.json().then((data) => {
-          if (this.dispatch) {
-            let mapping = this.mapDict();
-            let updatedData = rootData;
-            updatedData = set(
-              'addresses.geonames_city.id',
-              parseInt(id),
-              updatedData
-            );
-            for (const entry of mapping) {
-              updatedData = set(
-                entry.path,
-                this.checkData(data[entry.geoname], entry.type),
+          if (data.geonameId) {
+            if (this.dispatch) {
+                let mapping = this.mapDict();
+                let updatedData = rootData;
+                updatedData = set(
+                'addresses.geonames_city.id',
+                parseInt(id),
                 updatedData
-              );
-            }
-            if (data.adminId1) {
-              updatedData = this.processGeoNamesAdmin(data, updatedData, '1', [
-                data.countryCode,
-                data.adminCode1,
-              ]);
-              if (data.adminId2) {
-                updatedData = this.processGeoNamesAdmin(
-                  data,
-                  updatedData,
-                  '2',
-                  [data.countryCode, data.adminCode1, data.adminCode2]
                 );
-              }
+                for (const entry of mapping) {
+                updatedData = set(
+                    entry.path,
+                    this.checkData(data[entry.geoname], entry.type),
+                    updatedData
+                );
+                }
+                if (data.adminId1) {
+                    updatedData = this.processGeoNamesAdmin(data, updatedData, '1', [
+                        data.countryCode,
+                        data.adminCode1,
+                ]);
+                    if (data.adminId2) {
+                        updatedData = this.processGeoNamesAdmin(
+                            data,
+                            updatedData,
+                            '2',
+                            [data.countryCode, data.adminCode1, data.adminCode2]
+                        );
+                    }
+                }
+                this.dispatch(
+                Actions.updateCore(updatedData, this.s as JsonSchema, this.ui)
+                );
             }
-            this.dispatch(
-              Actions.updateCore(updatedData, this.s as JsonSchema, this.ui)
-            );
+          }
+          else {
+              alert("No geoname results found for id: " + id);
           }
         });
       });

@@ -46,17 +46,44 @@
         {
           "type": "Control",
           "label": "Latitude",
-          "scope": "#/properties/addresses/properties/lat"
+          "scope": "#/properties/addresses/properties/lat",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         },
         {
           "type": "Control",
           "label": "Longitude",
-          "scope": "#/properties/addresses/properties/lng"
+          "scope": "#/properties/addresses/properties/lng",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         },
         {
           "type": "Control",
           "label": "Geonames City",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/city"
+          "scope": "#/properties/addresses/properties/geonames_city/properties/city",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         }
       ]
     },
@@ -66,17 +93,44 @@
         {
           "type": "Control",
           "label": "Country Name",
-          "scope": "#/properties/country/properties/country_name"
+          "scope": "#/properties/country/properties/country_name",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         },
         {
           "type": "Control",
           "label": "Country Code",
-          "scope": "#/properties/country/properties/country_code"
+          "scope": "#/properties/country/properties/country_code",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         },
         {
           "type": "Control",
           "label": "Country Geonames ID",
-          "scope": "#/properties/addresses/properties/country_geonames_id"
+          "scope": "#/properties/addresses/properties/country_geonames_id",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         }
       ]
     },
@@ -86,12 +140,30 @@
         {
           "type": "Control",
           "label": "Geonames Admin 1",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin1"
+          "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin1",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin1/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         },
         {
           "type": "Control",
           "label": "Geonames Admin 2",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin2"
+          "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin2",
+          "rule": {
+            "effect": "SHOW",
+            "condition": {
+              "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin2/properties/id",
+              "schema": {
+                "type": "number"
+              }
+            }
+          }
         }
       ]
     }
