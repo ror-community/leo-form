@@ -20,13 +20,19 @@ import { defineComponent, ref, Ref } from '@vue/composition-api'
 import { ErrorObject } from 'ajv'
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue2'
 import { vuetifyRenderers } from '@jsonforms/vue2-vuetify'
+import  { entry } from './CustomRenderer.vue';
 import { examples } from "@/jsonSchema";
 
+const renderers = [
+  ...vuetifyRenderers,
+entry
+];
 export default defineComponent({
   name: 'ExampleJsonForms',
   components: {
     JsonForms
   },
+
   setup() {
     // declare a reactive property within the composition API's setup method
     const example = ref(examples[1])
@@ -39,7 +45,7 @@ export default defineComponent({
     const errors: Ref<ErrorObject[] | undefined> = ref(undefined)
     return {
       // freeze renderers for performance gains
-      renderers: Object.freeze(vuetifyRenderers),
+      renderers: Object.freeze(renderers),
       data: data
     }
   },

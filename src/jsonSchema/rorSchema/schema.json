@@ -40,7 +40,8 @@
       "required": ["country_code", "country_name"]
     },
     "name": {
-      "$ref": "#/definitions/non-empty-string"
+      "$ref": "#/definitions/non-empty-string",
+      "default": "default"
     },
     "wikipedia_url": {
       "type": "string"
@@ -49,18 +50,92 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "lat": {
+          "type": "number",
+          "readOnly": true
+        },
+        "lng": {
+          "type": "number",
+          "readOnly": true
+        },
+        "city": {
+          "type": "string",
+          "readOnly": true
+        },
+        "state_code": {
+          "type": ["null", "string"],
+          "readOnly": true
+        },
+        "state": {
+          "readOnly": true,
+          "type": ["null", "string"]
+        },
+        "country_geonames_id": {
+          "type": "number",
+          "readOnly": true
+        },
         "geonames_city": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "city": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true,
+              "default": "city"
             },
             "id": {
               "type": "integer"
+            },
+            "geonames_admin1": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ascii_name": {
+                  "type": "string",
+                  "readOnly": true
+                },
+                "name": {
+                  "readOnly": true,
+                  "type": "string"
+                },
+                "id": {
+                  "type": "integer",
+                  "readOnly": true
+                },
+                "code": {
+                  "readOnly": true,
+                  "type": "string"
+                }
+              }
+            },
+            "geonames_admin2": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ascii_name": {
+                  "type": "string",
+                  "readOnly": true,
+                  "default": " "
+                },
+                "name": {
+                  "readOnly": true,
+                  "type": "string",
+                  "default": " "
+                },
+                "id": {
+                  "type": "integer",
+                  "readOnly": true,
+                  "default": 0
+                },
+                "code": {
+                  "readOnly": true,
+                  "type": "string",
+                  "default": " "
+                }
+              }
             }
           },
-          "required": ["city", "id"]
+          "required": ["id"]
         }
       },
       "required": ["geonames_city"]

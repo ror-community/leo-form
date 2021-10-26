@@ -31,11 +31,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { VCard, VBtn } from 'vuetify/lib'
-import { provideToggleService } from '@/statemachines/example.machine'
-import { useActor } from 'xstate-vue2'
-import colors from 'vuetify/lib/util/colors'
 import ExampleComponent from '@/components/ExampleComponent.vue'
 import ExampleJsonForms from '@/components/ExampleJsonForms.vue'
 
