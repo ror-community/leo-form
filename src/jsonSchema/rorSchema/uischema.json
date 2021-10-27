@@ -10,7 +10,7 @@
         },
         {
           "type": "Control",
-          "scope": "#/properties/types"
+          "scope": "#/properties/established"
         }
       ]
     },
@@ -19,7 +19,10 @@
       "elements": [
         {
           "type": "Control",
-          "scope": "#/properties/established"
+          "scope": "#/properties/types",
+          "options": {
+            "type": true
+          }
         }
       ]
     },

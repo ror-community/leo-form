@@ -142,6 +142,7 @@
     },
     "types": {
       "type": "array",
+      "description": "Institutional Types",
       "items": {
         "type": "string",
         "enum": [
