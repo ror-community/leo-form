@@ -21,11 +21,13 @@ import { ErrorObject } from 'ajv'
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue2'
 import { vuetifyRenderers } from '@jsonforms/vue2-vuetify'
 import  { entry } from './CustomRenderer.vue';
+import  { langEntry } from './ShowLanguageRenderer.vue';
 import { examples } from "@/jsonSchema";
 
 const renderers = [
   ...vuetifyRenderers,
-entry
+entry,
+langEntry
 ];
 export default defineComponent({
   name: 'ExampleJsonForms',

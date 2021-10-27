@@ -219,6 +219,7 @@
     },
     "labels": {
       "type": "array",
+      "description": "Label and corresponding language",
       "items": {
         "properties": {
           "label": {

@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@jsonforms/core": "^3.0.0-alpha.1",
+    "@jsonforms/vue2": "^2.5.2",
     "@jsonforms/vue2-vuetify": "file:.yalc/@jsonforms/vue2-vuetify",
     "@vue/composition-api": "*",
     "@xstate/inspect": "^0.4.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "iso-language-codes": "^1.1.0",
     "lodash": "^4.17.21",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",

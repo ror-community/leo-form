@@ -15,17 +15,42 @@
       ]
     },
     {
-      "type": "HorizontalLayout",
+      "type": "VerticalLayout",
       "elements": [
         {
           "type": "Control",
           "scope": "#/properties/established"
-        },
-        {
-          "type": "Control",
-          "scope": "#/properties/labels"
         }
       ]
+    },
+    {
+      "type": "ListWithDetail",
+      "scope": "#/properties/labels",
+      "options": {
+        "detail": {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/label",
+                  "label": "Label"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/iso639",
+                  "label": "Language Code",
+                  "options": {
+                    "langCode": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "type": "HorizontalLayout",
