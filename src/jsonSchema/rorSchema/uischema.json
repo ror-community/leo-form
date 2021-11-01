@@ -15,13 +15,37 @@
       ]
     },
     {
-      "type": "VerticalLayout",
+      "type": "HorizontalLayout",
       "elements": [
         {
           "type": "Control",
           "scope": "#/properties/types",
           "options": {
             "type": true
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/wikipedia_url"
+        }
+      ]
+    },
+    {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/aliases"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/acronyms"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/links",
+          "schema": {
+            "pattern": "^http[s]://.*?"
           }
         }
       ]
@@ -34,7 +58,7 @@
           "type": "VerticalLayout",
           "elements": [
             {
-              "type": "HorizontalLayout",
+              "type": "VerticalLayout",
               "elements": [
                 {
                   "type": "Control",
@@ -56,64 +80,112 @@
       }
     },
     {
-      "type": "HorizontalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "Label": "Location ID",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-          "options": {
-            "locationId": true
-          }
+      "type": "ListWithDetail",
+      "scope": "#/properties/addresses",
+      "options": {
+        "detail": {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/geonames_city/properties/id",
+                  "label": "LocationID",
+                  "options": {
+                    "locationId": true
+                  }
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/geonames_city/properties/city",
+                  "label": "City",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Control",
+                  "label": "Latitude",
+                  "scope": "#/properties/lat",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Control",
+                  "label": "Longitude",
+                  "scope": "#/properties/lng",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Control",
+                  "label": "Country Geonames ID",
+                  "scope": "#/properties/country_geonames_id",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Control",
+                  "label": "Geonames Admin 1",
+                  "scope": "#/properties/geonames_city/properties/geonames_admin1",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/geonames_admin1/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Control",
+                  "label": "Geonames Admin 2",
+                  "scope": "#/properties/geonames_city/properties/geonames_admin2",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/geonames_admin2/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
         }
-      ]
-    },
-    {
-      "type": "HorizontalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "label": "Latitude",
-          "scope": "#/properties/addresses/properties/lat",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
-        },
-        {
-          "type": "Control",
-          "label": "Longitude",
-          "scope": "#/properties/addresses/properties/lng",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
-        },
-        {
-          "type": "Control",
-          "label": "Geonames City",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/city",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
-        }
-      ]
+      }
     },
     {
       "type": "HorizontalLayout",
@@ -121,77 +193,12 @@
         {
           "type": "Control",
           "label": "Country Name",
-          "scope": "#/properties/country/properties/country_name",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
+          "scope": "#/properties/country/properties/country_name"
         },
         {
           "type": "Control",
           "label": "Country Code",
-          "scope": "#/properties/country/properties/country_code",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
-        },
-        {
-          "type": "Control",
-          "label": "Country Geonames ID",
-          "scope": "#/properties/addresses/properties/country_geonames_id",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "VerticalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "label": "Geonames Admin 1",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin1",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin1/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
-        },
-        {
-          "type": "Control",
-          "label": "Geonames Admin 2",
-          "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin2",
-          "rule": {
-            "effect": "SHOW",
-            "condition": {
-              "scope": "#/properties/addresses/properties/geonames_city/properties/geonames_admin2/properties/id",
-              "schema": {
-                "type": "number"
-              }
-            }
-          }
+          "scope": "#/properties/country/properties/country_code"
         }
       ]
     }

@@ -74,22 +74,22 @@ export const customRenderer = defineComponent({
     return { ...vControl, dispatch, jsonforms, s, ui };
   },
   methods: {
-    mapDict() {
+    mapDict(path: string) {
       return [
-        { path: 'addresses.lat', geoname: 'lat', type: 'float' },
-        { path: 'addresses.lng', geoname: 'lng', type: 'float' },
+        { path: path+'lat', geoname: 'lat', type: 'float' },
+        { path: path+'lng', geoname: 'lng', type: 'float' },
         {
-          path: 'addresses.country_geonames_id',
+          path: path+'country_geonames_id',
           geoname: 'countryId',
           type: 'int',
         },
         {
-          path: 'addresses.geonames_city.city',
+          path: path+'geonames_city.city',
           geoname: 'name',
           type: 'string',
         },
         {
-          path: 'addresses.city',
+          path: path+'city',
           geoname: 'name',
           type: 'string',
         },
@@ -123,12 +123,13 @@ export const customRenderer = defineComponent({
       ];
     },
     processGeoNamesAdmin(
+      p: string,
       geonameResponse: any,
       data: any,
       level: string,
       fields: string[]
     ) {
-      let path = 'addresses.geonames_city.geonames_admin' + level + '.';
+      let path = p + 'geonames_city.geonames_admin' + level + '.';
       let geonamesAdmin = this.mapGeoNamesAdmin(level);
       for (const admin of geonamesAdmin) {
         data = set(
@@ -140,7 +141,7 @@ export const customRenderer = defineComponent({
       data = set(path + 'code', fields.join('.'), data);
       return data;
     },
-    fetchAddress(id: string) {
+    fetchAddress(id: string, path: string) {
       const url = new URL('http://api.geonames.org/getJSON');
       const params = { geonameId: id, username: 'roradmin' }; // or:
       url.search = new URLSearchParams(params).toString();
@@ -149,10 +150,10 @@ export const customRenderer = defineComponent({
         response.json().then((data) => {
           if (data.geonameId) {
             if (this.dispatch) {
-                let mapping = this.mapDict();
+                let mapping = this.mapDict(path);
                 let updatedData = rootData;
                 updatedData = set(
-                'addresses.geonames_city.id',
+                path+'geonames_city.id',
                 parseInt(id),
                 updatedData
                 );
@@ -164,12 +165,13 @@ export const customRenderer = defineComponent({
                 );
                 }
                 if (data.adminId1) {
-                    updatedData = this.processGeoNamesAdmin(data, updatedData, '1', [
+                    updatedData = this.processGeoNamesAdmin(path, data, updatedData, '1', [
                         data.countryCode,
                         data.adminCode1,
                 ]);
                     if (data.adminId2) {
                         updatedData = this.processGeoNamesAdmin(
+                            path,
                             data,
                             updatedData,
                             '2',
@@ -189,9 +191,13 @@ export const customRenderer = defineComponent({
       });
     },
     onChange(e: number) {
+      console.log('CONTROL: ', this.control)
+      const regex = /(.*?addr.*?\d\.)/
+      const path = regex.exec(this.control.path)
+      let strPath = path ? path[0]: ''
+      console.log('REGEX: ', path)
       const id = e.toString();
-      this.fetchAddress(id);
-      this.control.data = e;
+      this.fetchAddress(id, strPath);
     },
   },
   computed: {
