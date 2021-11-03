@@ -441,5 +441,5 @@
       "minLength": 1
     }
   },
-  "required": ["name", "types", "addresses"]
+  "required": ["name", "types"]
 }

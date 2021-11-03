@@ -31,7 +31,7 @@
       ]
     },
     {
-      "type": "VerticalLayout",
+      "type": "HorizontalLayout",
       "elements": [
         {
           "type": "Control",
@@ -43,11 +43,17 @@
         },
         {
           "type": "Control",
-          "scope": "#/properties/acronyms"
+          "scope": "#/properties/acronyms",
+          "options": {
+            "genList": true
+          }
         },
         {
           "type": "Control",
           "scope": "#/properties/links",
+          "options": {
+            "genList": true
+          },
           "schema": {
             "pattern": "^http[s]://.*?"
           }

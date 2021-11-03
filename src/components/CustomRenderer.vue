@@ -191,11 +191,9 @@ export const customRenderer = defineComponent({
       });
     },
     onChange(e: number) {
-      console.log('CONTROL: ', this.control)
       const regex = /(.*?addr.*?\d\.)/
       const path = regex.exec(this.control.path)
       let strPath = path ? path[0]: ''
-      console.log('REGEX: ', path)
       const id = e.toString();
       this.fetchAddress(id, strPath);
     },

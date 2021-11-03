@@ -9,7 +9,7 @@
         @change="onChange"
         :ajv="handleDefaultsAjv"
       />
-      <a name="download" :href="download()" v-if="validForm" :download="getID()">Download</a>
+      <a name="download" :href="download()" v-if="validForm && data.id" :download="getID(data.id)">Download</a>
     </v-col>
     <v-col cols="4">
       <pre>{{ JSON.stringify(data, null, 2) }}</pre>
@@ -50,7 +50,7 @@ export default defineComponent({
   },
   data () {
     const example = ref(examples[1])
-    const data = ref({});
+    const data: Record<string, undefined> = {};
     const errors: Ref<ErrorObject[] | undefined> = ref(undefined)
     const validForm: boolean = false
     return {
@@ -67,10 +67,9 @@ export default defineComponent({
       var dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.data, null, 2))
       return dataStr
     },
-    getID () {
-      if ("id" in this.data) {
-        console.log('DATA: ', this.data)
-      }
+    getID (id: string) {
+      const fname = id.replace(/^http.*?org\//, '') + '.json'
+      return fname
     },
     onChange (event: JsonFormsChangeEvent) {
       this.data = event.data

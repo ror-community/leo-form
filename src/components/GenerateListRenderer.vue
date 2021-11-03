@@ -6,7 +6,7 @@
     :appliedOptions="appliedOptions"
   >
     <v-hover v-slot="{ hover }">
-      <v-select
+      <v-combobox
         :id="control.id + '-input'"
         :class="styles.control.input"
         :disabled="!control.enabled"
@@ -39,7 +39,7 @@ import {
   Actions,
   Tester,
   optionIs,
-  isObjectArrayControl,
+  isPrimitiveArrayControl,
   and
 } from '@jsonforms/core';
 import { defineComponent, inject } from '@vue/composition-api'
@@ -50,7 +50,7 @@ import {
 } from '@jsonforms/vue2';
 import { ControlWrapper } from '@jsonforms/vue2-vuetify';
 import { useVuetifyControl } from '@jsonforms/vue2-vuetify';
-import { VSelect, VHover } from 'vuetify/lib';
+import { VCombobox, VHover } from 'vuetify/lib';
 import { CoreActions } from '@jsonforms/core';
 
 
@@ -59,7 +59,7 @@ export const genListRenderer = defineComponent({
 
   components: {
     ControlWrapper,
-    VSelect,
+    VCombobox,
     VHover
   },
   props: {
@@ -76,12 +76,13 @@ export const genListRenderer = defineComponent({
   computed: {
     step(): number {
       const options: any = this.appliedOptions;
+      console.log(this.appliedOptions)
       return options.step ?? 1;
     },
   },
   methods: {
     onChange(e: string) {
-     console.log('me: ', e)
+     console.log('here2: ', e)
      if (this.dispatch) {
         this.dispatch(Actions.update(this.control.path, () => e));
      }
@@ -91,11 +92,11 @@ export const genListRenderer = defineComponent({
 
 export default genListRenderer
 
-const genListTester: Tester = and(optionIs('genList', true), isObjectArrayControl)
+const genListTester: Tester = and(optionIs('genList', true), isPrimitiveArrayControl)
 
 
 export const genListEntry: JsonFormsRendererRegistryEntry = {
-  renderer: genListTester,
+  renderer: genListRenderer,
   tester: rankWith(10, genListTester),
 };
 </script>
