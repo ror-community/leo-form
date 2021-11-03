@@ -7,8 +7,9 @@
         v-bind:uischema="example.input.uischema"
         v-bind:renderers="renderers"
         @change="onChange"
+        :ajv="handleDefaultsAjv"
       />
-      <a name="download" href="#" v-if="validForm">Download</a>
+      <a name="download" :href="download()" v-if="validForm" :download="getID()">Download</a>
     </v-col>
     <v-col cols="4">
       <pre>{{ JSON.stringify(data, null, 2) }}</pre>
@@ -20,7 +21,7 @@
 import { defineComponent, ref, Ref } from '@vue/composition-api'
 import { ErrorObject } from 'ajv'
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue2'
-import { vuetifyRenderers } from '@jsonforms/vue2-vuetify'
+import {  createAjv,vuetifyRenderers } from '@jsonforms/vue2-vuetify'
 import  { entry } from './CustomRenderer.vue';
 import  { langEntry } from './ShowLanguageRenderer.vue';
 import  { typeEntry } from './ShowTypes.vue';
@@ -34,6 +35,7 @@ langEntry,
 typeEntry,
 genListEntry
 ];
+const handleDefaultsAjv = createAjv({useDefaults: true});
 export default defineComponent({
   name: 'ExampleJsonForms',
   components: {
@@ -54,12 +56,22 @@ export default defineComponent({
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
+      handleDefaultsAjv: handleDefaultsAjv,
       data: data,
       errors: errors,
       validForm
     }
   },
   methods: {
+    download() {
+      var dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.data, null, 2))
+      return dataStr
+    },
+    getID () {
+      if ("id" in this.data) {
+        console.log('DATA: ', this.data)
+      }
+    },
     onChange (event: JsonFormsChangeEvent) {
       this.data = event.data
       this.errors.value = event.errors

@@ -10,16 +10,19 @@
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "default": []
     },
     "acronyms": {
       "type": "array",
+      "default": [],
       "items": {
         "type": "string"
       }
     },
     "links": {
       "type": "array",
+      "default": [],
       "items": {
         "type": "string"
       }
@@ -46,7 +49,6 @@
     },
     "wikipedia_url": {
       "type": "string",
-      "pattern": "^http.*?$",
       "default": ""
 
     },
@@ -304,7 +306,8 @@
               "type": [
                 "null",
                 "string"
-              ]
+              ],
+              "default": null
             },
             "all": {
               "type": [
@@ -323,7 +326,8 @@
               "type": [
                 "null",
                 "string"
-              ]
+              ],
+              "default": null
             },
             "all": {
               "type": "array",
@@ -342,7 +346,8 @@
               "type": [
                 "null",
                 "string"
-              ]
+              ],
+              "default": null
             },
             "all": {
               "type": "array",
@@ -361,7 +366,8 @@
               "type": [
                 "null",
                 "string"
-              ]
+              ],
+              "default": null
             },
             "all": {
               "type": "array",
@@ -374,7 +380,8 @@
       }
     },
     "established": {
-      "type": ["string", "number"]
+      "type": ["string", "number"],
+      "default": ""
     },
     "relationships": {
       "type": "array",
@@ -403,7 +410,8 @@
     "id": {
       "type": "string",
       "pattern": "^https://ror.org/0[a-z|0-9]{8}$",
-      "readOnly": true
+      "readOnly": true,
+      "default": "https://ror.org/012xzy7a9"
     },
     "labels": {
       "type": "array",
