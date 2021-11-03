@@ -4,7 +4,8 @@
   "additionalProperties": false,
   "properties": {
     "ip_addresses": {
-      "type": "array"
+      "type": "array",
+      "default": []
     },
     "aliases": {
       "type": "array",
@@ -48,8 +49,8 @@
       "$ref": "#/definitions/non-empty-string"
     },
     "wikipedia_url": {
-      "type": "string",
-      "default": ""
+      "type": ["null","string"],
+      "default": null
 
     },
     "addresses": {
@@ -105,49 +106,44 @@
                   "ascii_name": {
                     "readOnly": true,
                     "type": "string",
-                    "default": " "
+                    "default": null
                   },
                   "name": {
                     "readOnly": true,
                     "type": "string",
-                    "default": " "
+                    "default": null
                   },
                   "id": {
                     "type": "integer",
                     "readOnly": true,
-                    "default": 0
+                    "default": null
                   },
                   "code": {
                     "readOnly": true,
                     "type": "string",
-                    "default": " "
+                    "default": null
                   }
                 }
               },
               "geonames_admin2": {
                 "type": "object",
-                "x-class": "hide",
                 "additionalProperties": false,
                 "properties": {
                   "ascii_name": {
                     "readOnly": true,
-                    "type": "string",
-                    "default": " "
+                    "type": "string"
                   },
                   "name": {
                     "readOnly": true,
-                    "type": "string",
-                    "default": " "
+                    "type": "string"
                   },
                   "id": {
                     "type": "integer",
-                    "readOnly": true,
-                    "default": 0
+                    "readOnly": true
                   },
                   "code": {
                     "readOnly": true,
-                    "type": "string",
-                    "default": " "
+                    "type": "string"
                   }
                 }
               },
@@ -156,18 +152,18 @@
                 "additionalProperties": false,
                 "properties": {
                   "name": {
-                    "x-display": "hidden",
                     "type": [
                       "null",
                       "string"
-                    ]
+                    ],
+                    "default": null
                   },
                   "code": {
-                    "x-display": "hidden",
                     "type": [
                       "null",
                       "string"
-                    ]
+                    ],
+                    "default": null
                   }
                 },
                 "required": [
@@ -180,18 +176,18 @@
                 "additionalProperties": false,
                 "properties": {
                   "name": {
-                    "x-display": "hidden",
                     "type": [
                       "null",
                       "string"
-                    ]
+                    ],
+                    "default": null
                   },
                   "code": {
-                    "x-display": "hidden",
                     "type": [
                       "null",
                       "string"
-                    ]
+                    ],
+                    "default": null
                   }
                 },
                 "required": [
@@ -204,18 +200,18 @@
                 "additionalProperties": false,
                 "properties": {
                   "name": {
-                    "x-display": "hidden",
                     "type": [
                       "null",
                       "string"
-                    ]
+                    ],
+                    "default": null
                   },
                   "code": {
-                    "x-display": "hidden",
                     "type": [
                       "null",
                       "string"
-                    ]
+                    ],
+                    "default": null
                   }
                 },
                 "required": [
@@ -242,19 +238,20 @@
               "null",
               "string"
             ],
-            "readOnly": true
+            "readOnly": true,
+            "default": null
           },
           "state": {
             "readOnly": true,
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "default": null
           },
           "country_geonames_id": {
             "type": "integer",
-            "readOnly": true,
-            "x-class": "hide"
+            "readOnly": true
           },
           "primary": {
             "type": "boolean",
@@ -264,13 +261,15 @@
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "default": null
           },
           "line": {
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "default": null
           }
         }
       }
@@ -294,6 +293,7 @@
     },
     "external_ids": {
       "type": "object",
+      "default": {},
       "additionalProperties": false,
       "title": "External IDs",
       "properties": {
@@ -337,7 +337,7 @@
             }
           }
         },
-        "FunderRef": {
+        "FundRef": {
           "type": "object",
           "title": "FunderRef",
           "additionalProperties": false,
@@ -380,11 +380,12 @@
       }
     },
     "established": {
-      "type": ["string", "number"],
-      "default": ""
+      "type": ["null", "number"],
+      "default": null
     },
     "relationships": {
       "type": "array",
+      "default": [],
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -405,7 +406,8 @@
       }
     },
     "email_address": {
-      "type": "string"
+      "type": "string",
+      "default": null
     },
     "id": {
       "type": "string",
@@ -415,6 +417,7 @@
     },
     "labels": {
       "type": "array",
+      "default": [],
       "description": "Label and corresponding language",
       "items": {
         "properties": {
@@ -432,7 +435,9 @@
     },
     "status": {
       "type": "string",
-      "enum": ["active"]
+      "enum": ["active"],
+      "readOnly": true,
+      "default": "active"
     }
   },
   "definitions": {

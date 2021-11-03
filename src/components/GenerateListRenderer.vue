@@ -82,8 +82,7 @@ export const genListRenderer = defineComponent({
   },
   methods: {
     onChange(e: string) {
-     console.log('here2: ', e)
-     if (this.dispatch) {
+     if (this.dispatch ) {
         this.dispatch(Actions.update(this.control.path, () => e));
      }
     }
