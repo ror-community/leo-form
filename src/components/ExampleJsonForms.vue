@@ -8,6 +8,7 @@
         v-bind:renderers="renderers"
         @change="onChange"
       />
+      <a name="download" href="#" v-if="validForm">Download</a>
     </v-col>
     <v-col cols="4">
       <pre>{{ JSON.stringify(data, null, 2) }}</pre>
@@ -23,13 +24,15 @@ import { vuetifyRenderers } from '@jsonforms/vue2-vuetify'
 import  { entry } from './CustomRenderer.vue';
 import  { langEntry } from './ShowLanguageRenderer.vue';
 import  { typeEntry } from './ShowTypes.vue';
+import  { genListEntry } from './GenerateListRenderer.vue';
 import { examples } from "@/jsonSchema";
 
 const renderers = [
   ...vuetifyRenderers,
 entry,
 langEntry,
-typeEntry
+typeEntry,
+genListEntry
 ];
 export default defineComponent({
   name: 'ExampleJsonForms',
@@ -47,15 +50,20 @@ export default defineComponent({
     const example = ref(examples[1])
     const data = ref({});
     const errors: Ref<ErrorObject[] | undefined> = ref(undefined)
+    const validForm: boolean = false
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
-      data: data
+      data: data,
+      errors: errors,
+      validForm
     }
   },
   methods: {
     onChange (event: JsonFormsChangeEvent) {
       this.data = event.data
+      this.errors.value = event.errors
+      this.validForm = this.errors.value?.length == 0 ? true : false
     }
   }
 })

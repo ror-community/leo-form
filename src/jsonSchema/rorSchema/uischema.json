@@ -35,7 +35,11 @@
       "elements": [
         {
           "type": "Control",
-          "scope": "#/properties/aliases"
+          "scope": "#/properties/aliases",
+          "title": "Aliases",
+          "options": {
+            "genList": true
+          }
         },
         {
           "type": "Control",
@@ -199,6 +203,26 @@
           "type": "Control",
           "label": "Country Code",
           "scope": "#/properties/country/properties/country_code"
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "External IDs",
+          "scope": "#/properties/external_ids"
+        }
+      ]
+    },
+    {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "ROR ID",
+          "scope": "#/properties/id"
         }
       ]
     }

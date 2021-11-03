@@ -290,6 +290,89 @@
         ]
       }
     },
+    "external_ids": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "External IDs",
+      "properties": {
+        "GRID": {
+          "type": "object",
+          "title": "GRID",
+          "additionalProperties": false,
+          "properties": {
+            "preferred": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "all": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "ISNI": {
+          "type": "object",
+          "title": "ISNI",
+          "additionalProperties": false,
+          "properties": {
+            "preferred": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "all": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "FunderRef": {
+          "type": "object",
+          "title": "FunderRef",
+          "additionalProperties": false,
+          "properties": {
+            "preferred": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "all": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "Wikidata": {
+          "type": "object",
+          "title": "Wikidata",
+          "additionalProperties": false,
+          "properties": {
+            "preferred": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "all": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
     "established": {
       "type": ["string", "number"]
     },
@@ -315,40 +398,12 @@
       }
     },
     "email_address": {
-      "type": "number"
-    },
-    "external_ids": {
-      "type": "object",
-      "minProperties": 1,
-      "patternProperties": {
-        "^.*?$": {
-          "type": "object",
-          "properties": {
-            "all": {
-              "oneOf": [
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            },
-            "preferred": {
-              "type": ["string", "number"]
-            }
-          },
-          "required": ["all", "preferred"]
-        }
-      },
-      "additionalProperties": false
+      "type": "string"
     },
     "id": {
       "type": "string",
-      "pattern": "^https://ror.org/0[a-z|0-9]{8}$"
+      "pattern": "^https://ror.org/0[a-z|0-9]{8}$",
+      "readOnly": true
     },
     "labels": {
       "type": "array",
