@@ -213,12 +213,88 @@
       ]
     },
     {
-      "type": "HorizontalLayout",
+      "type": "Categorization",
       "elements": [
         {
-          "type": "Control",
-          "label": "External IDs",
-          "scope": "#/properties/external_ids"
+          "type": "Category",
+          "label": "GRID",
+          "elements": [
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/GRID"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "ISNI",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/ISNI/properties/preferred"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/ISNI/properties/all",
+                  "options": {
+                    "genList": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "FundRef",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/ISNI/properties/preferred"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/ISNI/properties/all",
+                  "options": {
+                    "genList": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Wikidata",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/ISNI/properties/preferred"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/external_ids/properties/ISNI/properties/all",
+                  "options": {
+                    "genList": true
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },

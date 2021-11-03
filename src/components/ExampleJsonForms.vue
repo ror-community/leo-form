@@ -9,7 +9,7 @@
         @change="onChange"
         :ajv="handleDefaultsAjv"
       />
-      <a name="download" :href="download()" v-if="validForm && data.id" :download="getID(data.id)">Download</a>
+      <a name="download" :href="download()" v-if="validForm && data.id" :download="getID(data.id)" style="background-color: #656374; color: white; text-decoration: none; padding:10px; border-radius: 10px;">Download</a>
     </v-col>
     <v-col cols="4">
       <pre>{{ JSON.stringify(data, null, 2) }}</pre>
@@ -75,6 +75,8 @@ export default defineComponent({
       this.data = event.data
       this.errors.value = event.errors
       this.validForm = this.errors.value?.length == 0 ? true : false
+      console.log("VALID?", this.validForm)
+      console.log("errors?", this.errors.value)
     }
   }
 })

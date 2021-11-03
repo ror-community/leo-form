@@ -406,7 +406,7 @@
       }
     },
     "email_address": {
-      "type": "string",
+      "type": ["null", "string"],
       "default": null
     },
     "id": {
@@ -446,5 +446,5 @@
       "minLength": 1
     }
   },
-  "required": ["name", "types"]
+  "required": ["name", "types", "addresses"]
 }
