@@ -1,5 +1,4 @@
 <template lang="html">
-  <v-app>
     <v-content>
       <v-container fluid grid-list-md>
         <v-layout row>
@@ -17,10 +16,9 @@
         </v-layout>
       </v-container>
     </v-content>
-  </v-app>
 </template>
 <script>
-import Search from "./Search.vue"
+import Search from './Search.vue'
 export default {
   components: { Search },
   data: function () {
