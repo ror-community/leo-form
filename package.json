@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "iso-language-codes": "^1.1.0",
     "lodash": "^4.17.21",
+    "underscore": "^1.13.1",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
     "vue-typeahead": "^2.3.2",
