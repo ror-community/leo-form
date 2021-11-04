@@ -11,7 +11,7 @@
               <v-card-text>
                 <v-row>
                   <v-col cols="12">
-                    <component v-bind:is="currentComponent"></component>
+                    <router-view/>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -30,23 +30,3 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@vue/composition-api'
-import { VCard, VBtn } from 'vuetify/lib'
-import NewRecord from '@/components/NewRecord.vue'
-
-export default defineComponent({
-  name: 'App',
-  components: { NewRecord, VCard, VBtn },
-  setup () {
-    const currentComponent = 'NewRecord'
-    return { currentComponent }
-  },
-  data: () => ({
-    // TODO: wire up theme choice to $vuetify property
-    theme: 'light'
-  }),
-  computed: {
-  }
-})
-</script>

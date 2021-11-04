@@ -15,16 +15,14 @@
     "@jsonforms/vue2": "^2.5.2",
     "@jsonforms/vue2-vuetify": "file:.yalc/@jsonforms/vue2-vuetify",
     "@vue/composition-api": "*",
-    "@xstate/inspect": "^0.4.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "iso-language-codes": "^1.1.0",
     "lodash": "^4.17.21",
-    "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
-    "vuetify": "^2.4.0",
-    "xstate": "^4.20.1",
-    "xstate-vue2": "^0.1.1"
+    "vue-router": "^3.5.3",
+    "vue-typeahead": "^2.3.2",
+    "vuetify": "^2.4.0"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.9",
