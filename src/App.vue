@@ -33,14 +33,13 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { VCard, VBtn } from 'vuetify/lib'
-import ExampleComponent from '@/components/ExampleComponent.vue'
-import ExampleJsonForms from '@/components/ExampleJsonForms.vue'
+import NewRecord from '@/components/NewRecord.vue'
 
 export default defineComponent({
   name: 'App',
-  components: { ExampleComponent, ExampleJsonForms, VCard, VBtn },
+  components: { NewRecord, VCard, VBtn },
   setup () {
-    const currentComponent = 'ExampleJsonForms'
+    const currentComponent = 'NewRecord'
     return { currentComponent }
   },
   data: () => ({
