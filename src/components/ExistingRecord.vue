@@ -1,8 +1,8 @@
 <template>
   <v-row>
-    <v-col cols="8">
+    <v-col>
       <json-forms
-        v-bind:data="ror.data"
+        v-bind:data="data"
         v-bind:schema="ror.schema"
         v-bind:uischema="ror.uischema"
         v-bind:renderers="renderers"
@@ -10,9 +10,6 @@
         :ajv="handleDefaultsAjv"
       />
       <a name="download" :href="download()" v-if="validForm && data.id" :download="getID(data.id)" style="background-color: #656374; color: white; text-decoration: none; padding:10px; border-radius: 10px;">Download</a>
-    </v-col>
-    <v-col cols="4">
-      <pre>{{ JSON.stringify(data, null, 2) }}</pre>
     </v-col>
   </v-row>
 </template>
@@ -49,14 +46,16 @@ export default defineComponent({
     return { ror }
   },
   data () {
-    const data: Record<string, undefined> = {};
+    //const data: Record<string, undefined> = {};
     const errors: Ref<ErrorObject[] | undefined> = ref(undefined)
     const validForm: boolean = false
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       handleDefaultsAjv: handleDefaultsAjv,
-      data: data,
+      id: this.$route.query.id,
+      payload: this.$route.params.item,
+      data: this.$route.params.item,
       errors: errors,
       validForm
     }

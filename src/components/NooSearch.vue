@@ -6,6 +6,7 @@
       item-value="id"
       label="Search for an organization name or ROR ID"
       solo
+      clearable
       />
 </template>
 

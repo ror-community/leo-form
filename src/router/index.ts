@@ -22,7 +22,8 @@ export default new Router({
     {
         path: '/exist',
         name: 'ExistingRecord',
-        component: ExistingRecord
+        component: ExistingRecord,
+        props: true
     }
   ]
 })

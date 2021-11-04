@@ -4,19 +4,24 @@
           :items="entries"
           :loading="isLoading"
           :search-input.sync="search"
-          color="white"
+          @change="pickRecord"
+          color="green"
+          filled
+          dense
+          outlined
+          rounded
           hide-no-data
           hide-selected
           item-text="name"
           item-value="id"
-          label="Public APIs"
-          placeholder="Start typing to Search"
-          prepend-icon="mdi-database-search"
+          label="ROR Organization Search"
+          placeholder="Start typing name or ROR ID"
           return-object
         ></v-autocomplete>
 </template>
 
 <script>
+import router from '@/router'
 export default {
   data () {
     return {
@@ -27,22 +32,25 @@ export default {
     }
   },
   watch: {
-    search: function (val, oldVal) {
-      console.log(val, oldVal)
-      if (!val) {
+    search: function (val) {
+      if (val.length < 3) {
         return
       }
-      // Items have already been requested
-      if (this.isLoading) return
-
-      this.isLoading = true
-
-      this.clearEntries()
-      this.isLoading = true
       this.fetchEntriesDebounced(val)
     }
   },
   methods: {
+    pickRecord(ror) {
+      console.log("ROR NAME: ", ror)
+      // const id = ror.id.replace(/^http.*?org\//, '')
+      router.push({
+        name: 'ExistingRecord',
+        params: {
+          item: ror
+        }
+      });
+      //window.location.href = '/exist?id=' + id + '&data=' + ror
+    },
     clearEntries () {
       this.count = 0
       this.entries = []
@@ -65,7 +73,6 @@ export default {
         .catch(err => {
           console.log(err)
         })
-        .finally(() => (this.isLoading = false))
     },
     fetchROR (val) {
       console.log('VAL: ', val)
