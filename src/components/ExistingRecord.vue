@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col>
+    <v-col cols="8">
       <json-forms
         v-bind:data="data"
         v-bind:schema="ror.schema"
@@ -10,6 +10,9 @@
         :ajv="handleDefaultsAjv"
       />
       <a name="download" :href="download()" v-if="validForm && data.id" :download="getID(data.id)" style="background-color: #656374; color: white; text-decoration: none; padding:10px; border-radius: 10px;">Download</a>
+    </v-col>
+    <v-col cols="4">
+      <pre>{{ JSON.stringify(data, null, 2) }}</pre>
     </v-col>
   </v-row>
 </template>
