@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import router from '@/router'
 import { defineComponent, ref, Ref } from '@vue/composition-api'
 import { ErrorObject } from 'ajv'
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue2'
@@ -54,10 +55,16 @@ export default defineComponent({
       renderers: Object.freeze(renderers),
       handleDefaultsAjv: handleDefaultsAjv,
       id: this.$route.query.id,
-      payload: this.$route.params.item,
       data: this.$route.params.item,
       errors: errors,
       validForm
+    }
+  },
+  mounted() {
+    if (this.data === undefined) {
+      router.push({
+        name: 'NewRecord'
+      })
     }
   },
   methods: {
