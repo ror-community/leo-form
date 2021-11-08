@@ -48,7 +48,7 @@ export default defineComponent({
   data () {
     //const data: Record<string, undefined> = {};
     const errors: Ref<ErrorObject[] | undefined> = ref(undefined)
-    const validForm: boolean = false
+    const validForm: boolean = errors?.value?.length == 0 ? true : false
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),

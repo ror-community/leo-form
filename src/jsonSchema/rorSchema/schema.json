@@ -131,19 +131,19 @@
                 "properties": {
                   "ascii_name": {
                     "readOnly": true,
-                    "type": "string"
+                    "type": ["string","null"]
                   },
                   "name": {
                     "readOnly": true,
-                    "type": "string"
+                    "type": ["string","null"]
                   },
                   "id": {
-                    "type": "integer",
+                    "type": ["integer","null"],
                     "readOnly": true
                   },
                   "code": {
                     "readOnly": true,
-                    "type": "string"
+                    "type": ["string","null"]
                   }
                 }
               },
@@ -294,7 +294,7 @@
     "external_ids": {
       "type": "object",
       "default": {},
-      "additionalProperties": false,
+      "additionalProperties": true,
       "title": "External IDs",
       "properties": {
         "GRID": {
