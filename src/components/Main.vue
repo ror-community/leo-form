@@ -3,7 +3,7 @@
       <v-container fluid grid-list-md>
         <v-layout row>
           <v-flex xs5>
-            <v-btn elevation="2" @click= "showTypeAhead()" v-if="!isExisting" id="exist">Existing Form</v-btn>
+            <v-btn elevation="2" @click= "showTypeAhead()" v-if="!isExisting" id="exist">Existing Record</v-btn>
             <template>
               <div>
                 <Search v-if="isExisting"></Search>
@@ -11,7 +11,7 @@
             </template>
           </v-flex>
           <v-flex xs5>
-            <v-btn elevation="2" href="/new">New Form</v-btn>
+            <v-btn elevation="2" href="/new">New Record</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
