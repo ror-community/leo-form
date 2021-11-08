@@ -18,6 +18,7 @@
         :required="control.required"
         :error-messages="control.errors"
         :clearable="hover"
+        :value="control.data"
         multiple
         chips
         deletable-chips

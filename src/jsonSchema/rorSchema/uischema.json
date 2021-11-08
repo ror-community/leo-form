@@ -261,11 +261,11 @@
               "elements": [
                 {
                   "type": "Control",
-                  "scope": "#/properties/external_ids/properties/ISNI/properties/preferred"
+                  "scope": "#/properties/external_ids/properties/FundRef/properties/preferred"
                 },
                 {
                   "type": "Control",
-                  "scope": "#/properties/external_ids/properties/ISNI/properties/all",
+                  "scope": "#/properties/external_ids/properties/FundRef/properties/all",
                   "options": {
                     "genList": true
                   }
@@ -283,11 +283,11 @@
               "elements": [
                 {
                   "type": "Control",
-                  "scope": "#/properties/external_ids/properties/ISNI/properties/preferred"
+                  "scope": "#/properties/external_ids/properties/Wikidata/properties/preferred"
                 },
                 {
                   "type": "Control",
-                  "scope": "#/properties/external_ids/properties/ISNI/properties/all",
+                  "scope": "#/properties/external_ids/properties/Wikidata/properties/all",
                   "options": {
                     "genList": true
                   }

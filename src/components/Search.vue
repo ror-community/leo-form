@@ -11,9 +11,19 @@
               @click:clear="clearResults"
               @blur="clearResults"
             ></v-text-field>
-      <ul v-if="hasItems">
-        <li v-for="(entry,index) in entries" :key="entry.id" @mousedown="pickRecord(entry)" @mousemove="setActive(index)" :class="activeClass(index)">{{ entry.name }}</li>
-      </ul>
+          <v-card class="mx-auto" max-width="500" v-if="hasItems">
+            <!--<v-list dense rounded>
+              <v-list-item-group active-class="active" v-model="entries">
+                <v-list-item v-for="(item, i) in entries" :key="i" @click="testMe(item)">
+                    <v-list-item-title> {{ item.name }}</v-list-item-title>
+               </v-list-item>
+              </v-list-item-group>
+            </v-list>-->
+            <ul v-if="hasItems">
+               <li v-for="(entry,index) in entries" :key="entry.id" @mousedown="pickRecord(entry)" @mousemove="setActive(index)" :class="activeClass(index)">{{ entry.name }}</li>
+             </ul>
+          </v-card>
+
         </div>
 </template>
 
@@ -28,6 +38,9 @@ export default {
     }
   },
   methods: {
+    testMe(v) {
+      console.log('V: ', v)
+    },
     findROR(val) {
       if (val?.length < 3) {
         return
