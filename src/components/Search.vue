@@ -12,7 +12,7 @@
               @blur="clearResults"
             ></v-text-field>
       <ul v-if="hasItems">
-        <li v-for="entry in entries" :key="entry.id" @mousedown="pickRecord(entry)" @mousemove="setActive(entry)" :class="activeClass(entry)">{{ entry.name }}</li>
+        <li v-for="(entry,index) in entries" :key="entry.id" @mousedown="pickRecord(entry)" @mousemove="setActive(index)" :class="activeClass(index)">{{ entry.name }}</li>
       </ul>
         </div>
 </template>
@@ -27,17 +27,8 @@ export default {
       current: -1
     }
   },
-  watch: {
-    search: function (val) {
-      if (val.length < 3) {
-        return
-      }
-      this.fetchEntriesDebounced(val)
-    }
-  },
   methods: {
     findROR(val) {
-      console.log('VAL: ', val)
       if (val?.length < 3) {
         return
       }
@@ -55,16 +46,13 @@ export default {
       });
     },
     setActive (index) {
-      this.current = index
+      this.current = index,
+      console.log('HERE: ', this.current)
     },
     activeClass (index) {
       return {
         active: this.current === index
       }
-    },
-    clearEntries () {
-      this.count = 0
-      this.entries = []
     },
     fetchEntriesDebounced (val) {
       clearTimeout(this._searchTimerId)
