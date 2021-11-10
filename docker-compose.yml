@@ -3,6 +3,7 @@ services:
   my-crossref:
     build:
       context: .
+      #image: ror-community/leo
       dockerfile: Dockerfile
     ports:
       - "127.0.0.1:8080:8080"
