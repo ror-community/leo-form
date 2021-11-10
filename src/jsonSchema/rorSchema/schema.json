@@ -417,9 +417,8 @@
     },
     "labels": {
       "type": "array",
-      "default": [],
-      "description": "Label and corresponding language",
       "items": {
+        "type": "object",
         "properties": {
           "label": {
             "type": "string"

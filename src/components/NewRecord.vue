@@ -50,7 +50,7 @@ export default defineComponent({
   },
   data () {
     const data: Record<string, undefined> = {};
-    const errors: Ref<ErrorObject[] | undefined> = ref(undefined)
+    const errors: any = ref(undefined)
     const validForm: boolean = false
     return {
       // freeze renderers for performance gains
