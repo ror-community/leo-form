@@ -11,7 +11,7 @@
             </template>
           </v-flex>
           <v-flex xs5>
-            <v-btn elevation="2" href="/new">New Record</v-btn>
+            <v-btn elevation="2"><router-link id="#new" to="/new" style="text-decoration:none; color: black">New Record</router-link></v-btn>
           </v-flex>
         </v-layout>
       </v-container>
