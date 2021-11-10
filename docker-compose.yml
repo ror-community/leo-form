@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  my-crossref:
+  my-leo-form:
     build:
       context: .
       #image: ror-community/leo
