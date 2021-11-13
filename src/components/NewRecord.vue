@@ -1,7 +1,12 @@
 <template>
   <v-row>
     <v-col cols="8">
+      <div id="nav">
+      <v-btn @click="clear()" style="background-color: #656374; color: white;margin-left:200px">Clear/Add Next</v-btn> <v-btn style="background-color: #656374; color: white;margin-left: 10px"><router-link to="/" style="color: white;text-decoration:none">Back</router-link></v-btn>
+      </div>
       <json-forms
+        :key="index"
+        v-model="data"
         v-bind:data="ror.data"
         v-bind:schema="ror.schema"
         v-bind:uischema="ror.uischema"
@@ -19,7 +24,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, Ref } from '@vue/composition-api'
-import { ErrorObject } from 'ajv'
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue2'
 import {  createAjv,vuetifyRenderers } from '@jsonforms/vue2-vuetify'
 import  { entry } from './CustomRenderer.vue';
@@ -27,6 +31,7 @@ import  { langEntry } from './ShowLanguageRenderer.vue';
 import  { typeEntry } from './ShowTypes.vue';
 import  { genListEntry } from './GenerateListRenderer.vue';
 import { input as rorSchema } from "@/jsonSchema/rorSchema";
+import router from '@/router'
 
 const renderers = [
   ...vuetifyRenderers,
@@ -58,10 +63,14 @@ export default defineComponent({
       handleDefaultsAjv: handleDefaultsAjv,
       data: data,
       errors: errors,
-      validForm
+      validForm,
+      index: 1
     }
   },
   methods: {
+    clear() {
+      this.index++
+    },
     download() {
       var dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.data, null, 2))
       return dataStr
@@ -78,3 +87,14 @@ export default defineComponent({
   }
 })
 </script>
+<style scoped>
+v-btn {
+  background-color: #656374; color: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+</style>

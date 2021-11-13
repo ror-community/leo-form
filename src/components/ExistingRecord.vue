@@ -1,6 +1,9 @@
 <template>
   <v-row>
     <v-col cols="10">
+      <div id="nav">
+      <v-btn style="background-color: #656374; color: white;margin-left:200px"><router-link to="/" style="color: white;text-decoration:none">Add New Record</router-link></v-btn> <v-btn style="background-color: #656374; color: white;margin-left: 10px"><router-link to="/" style="color: white;text-decoration:none">Search Existing Records</router-link></v-btn>
+      </div>
       <json-forms
         v-bind:data="data"
         v-bind:schema="ror.schema"
