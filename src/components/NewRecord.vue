@@ -14,7 +14,7 @@
         @change="onChange"
         :ajv="handleDefaultsAjv"
       />
-      <a name="download" :href="download()" v-if="validForm && data.id" :download="getID(data.id)" style="background-color: #656374; color: white; text-decoration: none; padding:10px; border-radius: 10px;">Download</a>
+      <v-btn v-if="validForm && data.id" @click="download">Download</v-btn>
     </v-col>
     <v-col cols="4">
       <pre>{{ JSON.stringify(data, null, 2) }}</pre>
@@ -31,7 +31,7 @@ import  { langEntry } from './ShowLanguageRenderer.vue';
 import  { typeEntry } from './ShowTypes.vue';
 import  { genListEntry } from './GenerateListRenderer.vue';
 import { input as rorSchema } from "@/jsonSchema/rorSchema";
-import router from '@/router'
+
 
 const renderers = [
   ...vuetifyRenderers,
@@ -50,18 +50,22 @@ export default defineComponent({
   setup() {
     // declare a reactive property within the composition API's setup method
     const ror = ref(rorSchema)
+    console.log('SETUP')
     // return properties - these get merged with data() below
     return { ror }
   },
   data () {
-    const data: Record<string, undefined> = {};
+    const data: Record<string, any> = {};
     const errors: any = ref(undefined)
     const validForm: boolean = false
+    var id: any
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       handleDefaultsAjv: handleDefaultsAjv,
       data: data,
+      id: id,
+      count: 0,
       errors: errors,
       validForm,
       index: 1
@@ -71,9 +75,23 @@ export default defineComponent({
     clear() {
       this.index++
     },
-    download() {
-      var dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.data, null, 2))
-      return dataStr
+    getRORId () {
+      if (this.validForm) {
+        fetch("http://localhost:5000/generateid").then((response) => {
+          response.json().then((data) => {
+            this.data.id = data['id']
+            console.log("HERE: ", this.data.id)
+          });
+        });
+      }
+    },
+    async download() {
+      await this.getRORId()
+      console.log("in download: ", this.data.id)
+      let a = document.createElement('a')
+      a.href = "data:application/octet-stream,"+encodeURIComponent(JSON.stringify(this.data, null, 2))
+      a.download = this.data.id.replace(/^http.*?org\//, '') + '.json'
+      a.click()
     },
     getID (id: string) {
       const fname = id.replace(/^http.*?org\//, '') + '.json'
