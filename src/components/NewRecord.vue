@@ -76,19 +76,23 @@ export default defineComponent({
       this.index++
     },
     getRORId () {
-      if (this.validForm) {
+      return new Promise(resolve => { 
         fetch("http://localhost:5000/generateid").then((response) => {
           response.json().then((data) => {
             this.data.id = data['id']
-            console.log("HERE: ", this.data.id)
+            console.log("GETRORID: ", this.data.id)
+            resolve('resolved');
           });
         });
-      }
+      });
     },
     async download() {
       await this.getRORId()
-      console.log("in download: ", this.data.id)
-      let a = document.createElement('a')
+      await this.generateFile()
+    },
+    generateFile() {
+      console.log("GENERATED FILE: ", this.data.id)
+      var a = document.createElement('a')
       a.href = "data:application/octet-stream,"+encodeURIComponent(JSON.stringify(this.data, null, 2))
       a.download = this.data.id.replace(/^http.*?org\//, '') + '.json'
       a.click()
