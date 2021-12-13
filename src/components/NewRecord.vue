@@ -50,7 +50,6 @@ export default defineComponent({
   setup() {
     // declare a reactive property within the composition API's setup method
     const ror = ref(rorSchema)
-    console.log('SETUP')
     // return properties - these get merged with data() below
     return { ror }
   },
@@ -58,14 +57,11 @@ export default defineComponent({
     const data: Record<string, any> = {};
     const errors: any = ref(undefined)
     const validForm: boolean = false
-    var id: any
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       handleDefaultsAjv: handleDefaultsAjv,
       data: data,
-      id: id,
-      count: 0,
       errors: errors,
       validForm,
       index: 1
@@ -76,13 +72,20 @@ export default defineComponent({
       this.index++
     },
     getRORId () {
+      const url = new URL(process.env.VUE_APP_GENERATE_ID)
       return new Promise(resolve => { 
-        fetch("http://localhost:5000/generateid").then((response) => {
-          response.json().then((data) => {
-            this.data.id = data['id']
-            console.log("GETRORID: ", this.data.id)
-            resolve('resolved');
-          });
+        fetch(url.toString()).then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              this.data.id = data['id']
+              resolve('resolved');
+            });
+          }
+          else {
+            alert("ERROR in response: " + response);
+          }
+        }).catch((error) => {
+          alert("NETWORK ERROR: " + error)
         });
       });
     },
@@ -91,7 +94,6 @@ export default defineComponent({
       await this.generateFile()
     },
     generateFile() {
-      console.log("GENERATED FILE: ", this.data.id)
       var a = document.createElement('a')
       a.href = "data:application/octet-stream,"+encodeURIComponent(JSON.stringify(this.data, null, 2))
       a.download = this.data.id.replace(/^http.*?org\//, '') + '.json'

@@ -78,7 +78,6 @@ export const showTypeRenderer = defineComponent({
   },
   methods: {
     onChange(e: string) {
-     console.log('me: ', e)
      if (this.dispatch) {
         this.dispatch(Actions.update(this.control.path, () => e));
      }
