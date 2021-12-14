@@ -190,6 +190,20 @@
                       }
                     }
                   }
+                },
+                {
+                  "type": "Control",
+                  "label": "License attribution",
+                  "scope": "#/properties/geonames_city/properties/license",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "scope": "#/properties/geonames_city/properties/id",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
                 }
               ]
             }
