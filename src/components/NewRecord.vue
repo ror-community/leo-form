@@ -57,11 +57,14 @@ export default defineComponent({
     const data: Record<string, any> = {};
     const errors: any = ref(undefined)
     const validForm: boolean = false
+    const license: Record<string, string> =  {"attribution": "Data from geonames.org under a CC-BY 3.0 license", "license": "http://creativecommons.org/licenses/by/3.0/"}
+    
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       handleDefaultsAjv: handleDefaultsAjv,
       data: data,
+      license: license,
       errors: errors,
       validForm,
       index: 1
@@ -105,6 +108,9 @@ export default defineComponent({
     },
     onChange (event: JsonFormsChangeEvent) {
       this.data = event.data
+      if (event.data.addresses[0].geonames_city) {
+        this.data.addresses[0].geonames_city['license'] = this.license
+      }
       this.errors.value = event.errors
       this.validForm = this.errors.value?.length == 0 ? true : false
     }

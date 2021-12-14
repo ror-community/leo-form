@@ -190,26 +190,33 @@
                       }
                     }
                   }
-                },
-                {
-                  "type": "Control",
-                  "label": "License attribution",
-                  "scope": "#/properties/geonames_city/properties/license",
-                  "rule": {
-                    "effect": "SHOW",
-                    "condition": {
-                      "scope": "#/properties/geonames_city/properties/id",
-                      "schema": {
-                        "type": "number"
-                      }
-                    }
-                  }
                 }
               ]
             }
           ]
         }
       }
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "License Attribution",
+          "scope": "#/properties/addresses/items/properties/geonames_city/properties/license/properties/attribution",
+          "rule": {
+            "effect": "HIDE"
+          }
+        },
+        {
+          "type": "Control",
+          "label": "License URL",
+          "scope": "#/properties/addresses/items/properties/geonames_city/properties/license/properties/license",
+          "rule": {
+            "effect": "HIDE"
+          }
+        }
+      ]
     },
     {
       "type": "HorizontalLayout",
