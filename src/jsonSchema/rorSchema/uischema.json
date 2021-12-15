@@ -202,6 +202,27 @@
       "elements": [
         {
           "type": "Control",
+          "label": "License Attribution",
+          "scope": "#/properties/addresses/items/properties/geonames_city/properties/license/properties/attribution",
+          "rule": {
+            "effect": "HIDE"
+          }
+        },
+        {
+          "type": "Control",
+          "label": "License URL",
+          "scope": "#/properties/addresses/items/properties/geonames_city/properties/license/properties/license",
+          "rule": {
+            "effect": "HIDE"
+          }
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
           "label": "Country Name",
           "scope": "#/properties/country/properties/country_name"
         },

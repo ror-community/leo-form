@@ -82,6 +82,7 @@
               "license": {
                 "type": "object",
                 "additionalProperties": false,
+                "default": {},
                 "properties": {
                   "attribution": {
                     "readOnly": true,
