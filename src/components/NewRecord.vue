@@ -31,6 +31,7 @@ import  { langEntry } from './ShowLanguageRenderer.vue';
 import  { typeEntry } from './ShowTypes.vue';
 import  { genListEntry } from './GenerateListRenderer.vue';
 import { input as rorSchema } from "@/jsonSchema/rorSchema";
+import { env } from '../env';
 
 
 const renderers = [
@@ -56,7 +57,7 @@ export default defineComponent({
   data () {
     const data: Record<string, any> = {};
     const errors: any = ref(undefined)
-    const validForm: boolean = false    
+    const validForm: boolean = false  
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
@@ -72,7 +73,7 @@ export default defineComponent({
       this.index++
     },
     getRORId () {
-      const url = new URL(process.env.VUE_APP_GENERATE_ID)
+      const url = new URL(env().GENERATE_ID)
       return new Promise(resolve => { 
         fetch(url.toString()).then((response) => {
           if (response.ok) {

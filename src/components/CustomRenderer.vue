@@ -52,6 +52,7 @@ import { useVuetifyControl } from '@jsonforms/vue2-vuetify';
 import { VTextField } from 'vuetify/lib';
 import { CoreActions } from '@jsonforms/core';
 import set from 'lodash/fp/set';
+import { env } from '../env';
 
 export const customRenderer = defineComponent({
   name: 'custom-renderer',
@@ -142,8 +143,9 @@ export const customRenderer = defineComponent({
       return data;
     },
     fetchAddress(id: string, path: string) {
-      const url = new URL('http://api.geonames.org/getJSON');
-      const params = { geonameId: id, username: 'roradmin' }; // or:
+      const url = new URL(env().GEONAMES_URL);
+      const username = env().GEONAMES_USERNAME
+      const params = { geonameId: id, username: username }; // or:
       url.search = new URLSearchParams(params).toString();
       const rootData = this.jsonforms?.core?.data;
       fetch(url.toString()).then((response) => {
