@@ -87,7 +87,7 @@ export default defineComponent({
           }
         }).catch((error) => {
           // commenting the following alert out to test dev deployment without generate id
-          //alert("GENERATE ID microservice is not up: " + error)
+          //alert("GENERATEID microservice is offline: " + error)
           resolve('resolved')
         });
       });
