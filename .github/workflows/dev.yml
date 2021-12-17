@@ -16,9 +16,9 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy 
-        uses: reggionick/s3-deploy@v3
+        uses: reggionick/s3-deploy@v3.1.1
         with:
-          folder: public
+          folder: dist
           bucket: ${{ secrets.S3_BUCKET_CURATORFORM_DEV}}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
           dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_CURATORFORM_DEV }}
