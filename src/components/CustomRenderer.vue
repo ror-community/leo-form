@@ -190,6 +190,8 @@ export const customRenderer = defineComponent({
               alert("No geoname results found for id: " + id);
           }
         });
+      }).catch((error) => {
+        alert("GEONAMES api service is offline: " + error)
       });
     },
     onChange(e: number) {
