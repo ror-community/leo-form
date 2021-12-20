@@ -86,9 +86,7 @@ export default defineComponent({
             alert("ERROR in response: " + response);
           }
         }).catch((error) => {
-          // commenting the following alert out to test dev deployment without generate id
-          //alert("GENERATEID microservice is offline: " + error)
-          resolve('resolved')
+          alert("ERROR accessing response from GENERATE ID microservice: " + error)
         });
       });
     },
