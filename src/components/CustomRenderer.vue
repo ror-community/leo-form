@@ -184,6 +184,8 @@ export const customRenderer = defineComponent({
             }
           }
           else {
+              console.log("RESPONSE: ", response)
+              console.log("DATA: ", data)
               alert("No geoname results found for id: " + id);
           }
         });
