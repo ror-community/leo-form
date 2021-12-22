@@ -143,7 +143,9 @@ export const customRenderer = defineComponent({
       return data;
     },
     fetchAddress(id: string, path: string) {
-      const url = new URL(env().GEONAMES_URL+"/"+id);
+      const url = new URL(env().GEONAMES_URL);
+      const param = { locationid: id };
+      url.search = new URLSearchParams(param).toString();
       const rootData = this.jsonforms?.core?.data;
       fetch(url.toString()).then((response) => {
         response.json().then((data) => {
