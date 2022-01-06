@@ -381,7 +381,7 @@
       }
     },
     "established": {
-      "type": ["null", "number"],
+      "type": ["null", "integer"],
       "default": null
     },
     "relationships": {
