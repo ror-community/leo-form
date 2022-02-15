@@ -142,6 +142,38 @@ export const customRenderer = defineComponent({
       data = set(path + 'code', fields.join('.'), data);
       return data;
     },
+    ignoreFields() {
+      return ["line", "postcode", "primary", "state", "state_code"]
+    },
+    clearAddress(path: string) {
+      if (this.dispatch) {
+        let address = this.jsonforms?.core?.data.addresses[0];
+        let updatedData = this.jsonforms?.core?.data;
+        const ignoreFields = this.ignoreFields()
+        for (const i in address) {
+          let field = path + i
+          if (!(ignoreFields.includes(i)))
+          {
+            if (i == "geonames_city") {
+              for (const f in address[i]) {
+                let city_field = field + "." + f
+                const admin_fields = ["geonames_admin1", "geonames_admin2"]
+                if (admin_fields.includes(f)){
+                  for (const a in address[i][f]) {
+                    let adminField = city_field + "." + a
+                    updatedData = set(adminField,null,updatedData);
+                  }
+                }
+                updatedData = set(field+'.city',null,updatedData);
+              }
+            }
+          }
+        }
+        this.dispatch(
+          Actions.updateCore(updatedData, this.s as JsonSchema, this.ui));
+      }
+
+    },
     fetchAddress(id: string, path: string) {
       const url = new URL(env().GEONAMES_URL);
       const param = { locationid: id };
@@ -186,8 +218,6 @@ export const customRenderer = defineComponent({
             }
           }
           else {
-              console.log("RESPONSE: ", response)
-              console.log("DATA: ", data)
               alert("No geoname results found for id: " + id);
           }
         });
@@ -200,6 +230,10 @@ export const customRenderer = defineComponent({
       const path = regex.exec(this.control.path)
       let strPath = path ? path[0]: ''
       const id = e.toString();
+      const lat = this.jsonforms?.core?.data.addresses[0].lat
+      if (lat) {
+        this.clearAddress(strPath)
+      }
       this.fetchAddress(id, strPath);
     },
   },
