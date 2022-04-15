@@ -140,13 +140,14 @@ export const customRenderer = defineComponent({
     getAddress (e: number) {
       const id = e.toString()
       const lat = this.jsonforms?.core?.data.addresses[0].lat
+      const strPath = 'addresses.0'
       if (lat) {
         this.clearAddress(strPath)
       }
       if(id)
         this.fetchAddress(id)
       else {
-        this.clearAddress('addresses.0')
+        this.clearAddress(strPath)
       }
     }
   },
