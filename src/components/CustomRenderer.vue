@@ -20,7 +20,7 @@
       :required="control.required"
       :error-messages="control.errors"
       :value="control.data"
-      @change="onChange"
+      @change="getAddress"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -75,112 +75,39 @@ export const customRenderer = defineComponent({
     return { ...vControl, dispatch, jsonforms, s, ui };
   },
   methods: {
-    mapDict(path: string) {
-      return [
-        { path: path+'lat', geoname: 'lat', type: 'float' },
-        { path: path+'lng', geoname: 'lng', type: 'float' },
-        {
-          path: path+'country_geonames_id',
-          geoname: 'countryId',
-          type: 'int',
-        },
-        {
-          path: path+'geonames_city.city',
-          geoname: 'name',
-          type: 'string',
-        },
-        {
-          path: path+'city',
-          geoname: 'name',
-          type: 'string',
-        },
-        {
-          path: 'country.country_name',
-          geoname: 'countryName',
-          type: 'string',
-        },
-        {
-          path: 'country.country_code',
-          geoname: 'countryCode',
-          type: 'string',
-        },
-      ];
-    },
-    checkData(data: string, type: string) {
-      switch (type) {
-        case 'float':
-          return parseFloat(data);
-        case 'int':
-          return parseInt(data);
-        default:
-          return data;
-      }
-    },
-    mapGeoNamesAdmin(level: string) {
-      return [
-        { ror: 'name', geoname: 'adminName' + level, type: 'string' },
-        { ror: 'ascii_name', geoname: 'adminName' + level, type: 'string' },
-        { ror: 'id', geoname: 'adminId' + level, type: 'int' },
-      ];
-    },
-    processGeoNamesAdmin(
-      p: string,
-      geonameResponse: any,
-      data: any,
-      level: string,
-      fields: string[]
-    ) {
-      let path = p + 'geonames_city.geonames_admin' + level + '.';
-      let geonamesAdmin = this.mapGeoNamesAdmin(level);
-      for (const admin of geonamesAdmin) {
-        data = set(
-          path + admin.ror,
-          this.checkData(geonameResponse[admin.geoname], admin.type),
-          data
-        );
-      }
-      data = set(path + 'code', fields.join('.'), data);
-      return data;
-    },
-    fetchAddress(id: string, path: string) {
-      const url = new URL(env().GEONAMES_URL);
-      const username = env().GEONAMES_USERNAME
-      const params = { geonameId: id, username: username }; // or:
+    fetchAddress(id: string) {
+      const url = new URL(env().ADDRESS_URL);
+      const params = { locationid: id }; // or:
       url.search = new URLSearchParams(params).toString();
       const rootData = this.jsonforms?.core?.data;
       fetch(url.toString()).then((response) => {
         response.json().then((data) => {
-          if (data.geonameId) {
+          console.log(data);
+          if (data.address.geonames_city.id) {
+            console.log("Address OK");
+            console.log(rootData);
             if (this.dispatch) {
-                let mapping = this.mapDict(path);
                 let updatedData = rootData;
                 updatedData = set(
-                path+'geonames_city.id',
+                  'addresses.0',
+                  data.address,
+                  updatedData
+                );
+                updatedData = set(
+                'addresses.0.geonames_city.id',
                 parseInt(id),
                 updatedData
-                );
-                for (const entry of mapping) {
+                )
                 updatedData = set(
-                    entry.path,
-                    this.checkData(data[entry.geoname], entry.type),
+                    'country.country_name',
+                    data.country.country_name,
                     updatedData
                 );
-                }
-                if (data.adminId1) {
-                    updatedData = this.processGeoNamesAdmin(path, data, updatedData, '1', [
-                        data.countryCode,
-                        data.adminCode1,
-                ]);
-                    if (data.adminId2) {
-                        updatedData = this.processGeoNamesAdmin(
-                            path,
-                            data,
-                            updatedData,
-                            '2',
-                            [data.countryCode, data.adminCode1, data.adminCode2]
-                        );
-                    }
-                }
+                updatedData = set(
+                    'country.country_code',
+                    data.country.country_code,
+                    updatedData
+                );
                 this.dispatch(
                 Actions.updateCore(updatedData, this.s as JsonSchema, this.ui)
                 );
@@ -192,12 +119,9 @@ export const customRenderer = defineComponent({
         });
       });
     },
-    onChange(e: number) {
-      const regex = /(.*?addr.*?\d\.)/
-      const path = regex.exec(this.control.path)
-      let strPath = path ? path[0]: ''
+    getAddress(e: number) {
       const id = e.toString();
-      this.fetchAddress(id, strPath);
+      this.fetchAddress(id);
     },
   },
   computed: {
