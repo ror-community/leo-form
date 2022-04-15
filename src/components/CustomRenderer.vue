@@ -20,7 +20,7 @@
       :required="control.required"
       :error-messages="control.errors"
       :value="control.data"
-      @change="onChange"
+      @change="getAddress"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -40,220 +40,133 @@ import {
   and,
   Tester,
   optionIs,
-} from '@jsonforms/core';
-import { defineComponent, inject} from '@vue/composition-api'
+  CoreActions
+} from '@jsonforms/core'
+import { defineComponent, inject } from '@vue/composition-api'
 import {
   rendererProps,
   useJsonFormsControl,
-  RendererProps,
-} from '@jsonforms/vue2';
-import { ControlWrapper } from '@jsonforms/vue2-vuetify';
-import { useVuetifyControl } from '@jsonforms/vue2-vuetify';
-import { VTextField } from 'vuetify/lib';
-import { CoreActions } from '@jsonforms/core';
-import set from 'lodash/fp/set';
-import { env } from '../env';
+  RendererProps
+} from '@jsonforms/vue2'
+import { ControlWrapper, useVuetifyControl } from '@jsonforms/vue2-vuetify'
+
+import { VTextField } from 'vuetify/lib'
+
+import set from 'lodash/fp/set'
+import { env } from '../env'
 
 export const customRenderer = defineComponent({
   name: 'custom-renderer',
   components: {
     ControlWrapper,
-    VTextField,
+    VTextField
   },
   props: {
-    ...rendererProps<ControlElement>(),
+    ...rendererProps<ControlElement>()
   },
-  setup(props: RendererProps<ControlElement>) {
-    const dispatch = inject<Dispatch<CoreActions>>('dispatch');
-    const jsonforms = inject<JsonFormsSubStates>('jsonforms');
-    const s = jsonforms?.core?.schema;
-    const ui = jsonforms?.core?.uischema;
+  setup (props: RendererProps<ControlElement>) {
+    const dispatch = inject<Dispatch<CoreActions>>('dispatch')
+    const jsonforms = inject<JsonFormsSubStates>('jsonforms')
+    const s = jsonforms?.core?.schema
+    const ui = jsonforms?.core?.uischema
     const vControl = useVuetifyControl(
       useJsonFormsControl(props),
       (value) => parseInt(value, 10) || undefined
-    );
-    return { ...vControl, dispatch, jsonforms, s, ui };
+    )
+    return { ...vControl, dispatch, jsonforms, s, ui }
   },
   methods: {
-    mapDict(path: string) {
-      return [
-        { path: path+'lat', geoname: 'lat', type: 'float' },
-        { path: path+'lng', geoname: 'lng', type: 'float' },
-        {
-          path: path+'country_geonames_id',
-          geoname: 'countryId',
-          type: 'int',
-        },
-        {
-          path: path+'geonames_city.city',
-          geoname: 'name',
-          type: 'string',
-        },
-        {
-          path: path+'city',
-          geoname: 'name',
-          type: 'string',
-        },
-        {
-          path: 'country.country_name',
-          geoname: 'countryName',
-          type: 'string',
-        },
-        {
-          path: 'country.country_code',
-          geoname: 'countryCode',
-          type: 'string',
-        },
-      ];
-    },
-    checkData(data: string, type: string) {
-      switch (type) {
-        case 'float':
-          return parseFloat(data);
-        case 'int':
-          return parseInt(data);
-        default:
-          return data;
-      }
-    },
-    mapGeoNamesAdmin(level: string) {
-      return [
-        { ror: 'name', geoname: 'adminName' + level, type: 'string' },
-        { ror: 'ascii_name', geoname: 'adminName' + level, type: 'string' },
-        { ror: 'id', geoname: 'adminId' + level, type: 'int' },
-      ];
-    },
-    processGeoNamesAdmin(
-      p: string,
-      geonameResponse: any,
-      data: any,
-      level: string,
-      fields: string[]
-    ) {
-      let path = p + 'geonames_city.geonames_admin' + level + '.';
-      let geonamesAdmin = this.mapGeoNamesAdmin(level);
-      for (const admin of geonamesAdmin) {
-        data = set(
-          path + admin.ror,
-          this.checkData(geonameResponse[admin.geoname], admin.type),
-          data
-        );
-      }
-      data = set(path + 'code', fields.join('.'), data);
-      return data;
-    },
     ignoreFields() {
       return ["line", "postcode", "primary", "state", "state_code"]
     },
     clearAddress(path: string) {
+      const rootData = this.jsonforms?.core?.data
       if (this.dispatch) {
-        let address = this.jsonforms?.core?.data.addresses[0];
-        let updatedData = this.jsonforms?.core?.data;
-        const ignoreFields = this.ignoreFields()
-        for (const i in address) {
-          let field = path + i
-          if (!(ignoreFields.includes(i)))
-          {
-            if (i == "geonames_city") {
-              for (const f in address[i]) {
-                let city_field = field + "." + f
-                const admin_fields = ["geonames_admin1", "geonames_admin2"]
-                if (admin_fields.includes(f)){
-                  for (const a in address[i][f]) {
-                    let adminField = city_field + "." + a
-                    updatedData = set(adminField,null,updatedData);
-                  }
-                }
-                updatedData = set(field+'.city',null,updatedData);
-              }
-            }
-          }
-        }
+        let updatedData = rootData
+        updatedData = set(
+          'addresses.0',
+          {},
+          updatedData
+        )
+        updatedData = set(
+          'country',
+          {},
+          updatedData
+        )
         this.dispatch(
           Actions.updateCore(updatedData, this.s as JsonSchema, this.ui));
       }
-
     },
-    fetchAddress(id: string, path: string) {
-      const url = new URL(env().GEONAMES_URL);
-      const param = { locationid: id };
-      url.search = new URLSearchParams(param).toString();
-      const rootData = this.jsonforms?.core?.data;
+    fetchAddress (id: string) {
+      const url = new URL(env().ADDRESS_URL)
+      const params = { locationid: id } // or:
+      url.search = new URLSearchParams(params).toString()
+      const rootData = this.jsonforms?.core?.data
       fetch(url.toString()).then((response) => {
         response.json().then((data) => {
-          if (data.geonameId) {
+          if (data.address.geonames_city.id) {
             if (this.dispatch) {
-                let mapping = this.mapDict(path);
-                let updatedData = rootData;
-                updatedData = set(
-                path+'geonames_city.id',
+              let updatedData = rootData
+              updatedData = set(
+                'addresses.0',
+                data.address,
+                updatedData
+              )
+              updatedData = set(
+                'addresses.0.geonames_city.id',
                 parseInt(id),
                 updatedData
-                );
-                for (const entry of mapping) {
-                updatedData = set(
-                    entry.path,
-                    this.checkData(data[entry.geoname], entry.type),
-                    updatedData
-                );
-                }
-                if (data.adminId1) {
-                    updatedData = this.processGeoNamesAdmin(path, data, updatedData, '1', [
-                        data.countryCode,
-                        data.adminCode1,
-                ]);
-                    if (data.adminId2) {
-                        updatedData = this.processGeoNamesAdmin(
-                            path,
-                            data,
-                            updatedData,
-                            '2',
-                            [data.countryCode, data.adminCode1, data.adminCode2]
-                        );
-                    }
-                }
-                this.dispatch(
+              )
+              updatedData = set(
+                'country.country_name',
+                data.country.country_name,
+                updatedData
+              )
+              updatedData = set(
+                'country.country_code',
+                data.country.country_code,
+                updatedData
+              )
+              this.dispatch(
                 Actions.updateCore(updatedData, this.s as JsonSchema, this.ui)
-                );
+              )
             }
+          } else {
+            alert('No geoname results found for id: ' + id)
           }
-          else {
-              alert("No geoname results found for id: " + id);
-          }
-        });
-      }).catch((error) => {
-        alert("GEONAMES api service is offline: " + error)
-      });
+        })
+      })
     },
-    onChange(e: number) {
-      const regex = /(.*?addr.*?\d\.)/
-      const path = regex.exec(this.control.path)
-      let strPath = path ? path[0]: ''
-      const id = e.toString();
+    getAddress (e: number) {
+      const id = e.toString()
       const lat = this.jsonforms?.core?.data.addresses[0].lat
       if (lat) {
         this.clearAddress(strPath)
       }
-      this.fetchAddress(id, strPath);
-    },
+      if(id)
+        this.fetchAddress(id)
+      else {
+        this.clearAddress('addresses.0')
+      }
+    }
   },
   computed: {
-    step(): number {
-      const options: any = this.appliedOptions;
-      return options.step ?? 1;
-    },
-  },
-});
+    step (): number {
+      const options: any = this.appliedOptions
+      return options.step ?? 1
+    }
+  }
+})
 
 export default customRenderer
 
 const locationIDTester: Tester = and(
   isIntegerControl,
   optionIs('locationId', true)
-);
+)
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: customRenderer,
-  tester: rankWith(10, locationIDTester),
-};
+  tester: rankWith(10, locationIDTester)
+}
 </script>
