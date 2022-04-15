@@ -80,33 +80,22 @@ export const customRenderer = defineComponent({
       return ["line", "postcode", "primary", "state", "state_code"]
     },
     clearAddress(path: string) {
+      const rootData = this.jsonforms?.core?.data
       if (this.dispatch) {
-        let address = this.jsonforms?.core?.data.addresses[0];
-        let updatedData = this.jsonforms?.core?.data;
-        const ignoreFields = this.ignoreFields()
-        for (const i in address) {
-          let field = path + i
-          if (!(ignoreFields.includes(i)))
-          {
-            if (i == "geonames_city") {
-              for (const f in address[i]) {
-                let city_field = field + "." + f
-                const admin_fields = ["geonames_admin1", "geonames_admin2"]
-                if (admin_fields.includes(f)){
-                  for (const a in address[i][f]) {
-                    let adminField = city_field + "." + a
-                    updatedData = set(adminField,null,updatedData);
-                  }
-                }
-                updatedData = set(field+'.city',null,updatedData);
-              }
-            }
-          }
-        }
+        let updatedData = rootData
+        updatedData = set(
+          'addresses.0',
+          {},
+          updatedData
+        )
+        updatedData = set(
+          'country',
+          {},
+          updatedData
+        )
         this.dispatch(
           Actions.updateCore(updatedData, this.s as JsonSchema, this.ui));
       }
-
     },
     fetchAddress (id: string) {
       const url = new URL(env().ADDRESS_URL)
@@ -115,10 +104,7 @@ export const customRenderer = defineComponent({
       const rootData = this.jsonforms?.core?.data
       fetch(url.toString()).then((response) => {
         response.json().then((data) => {
-          console.log(data)
           if (data.address.geonames_city.id) {
-            console.log('Address OK')
-            console.log(rootData)
             if (this.dispatch) {
               let updatedData = rootData
               updatedData = set(
@@ -153,10 +139,15 @@ export const customRenderer = defineComponent({
     },
     getAddress (e: number) {
       const id = e.toString()
+      const lat = this.jsonforms?.core?.data.addresses[0].lat
       if (lat) {
+        this.clearAddress(strPath)
+      }
+      if(id)
+        this.fetchAddress(id)
+      else {
         this.clearAddress('addresses.0')
       }
-      this.fetchAddress(id)
     }
   },
   computed: {
