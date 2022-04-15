@@ -76,6 +76,38 @@ export const customRenderer = defineComponent({
     return { ...vControl, dispatch, jsonforms, s, ui }
   },
   methods: {
+    ignoreFields() {
+      return ["line", "postcode", "primary", "state", "state_code"]
+    },
+    clearAddress(path: string) {
+      if (this.dispatch) {
+        let address = this.jsonforms?.core?.data.addresses[0];
+        let updatedData = this.jsonforms?.core?.data;
+        const ignoreFields = this.ignoreFields()
+        for (const i in address) {
+          let field = path + i
+          if (!(ignoreFields.includes(i)))
+          {
+            if (i == "geonames_city") {
+              for (const f in address[i]) {
+                let city_field = field + "." + f
+                const admin_fields = ["geonames_admin1", "geonames_admin2"]
+                if (admin_fields.includes(f)){
+                  for (const a in address[i][f]) {
+                    let adminField = city_field + "." + a
+                    updatedData = set(adminField,null,updatedData);
+                  }
+                }
+                updatedData = set(field+'.city',null,updatedData);
+              }
+            }
+          }
+        }
+        this.dispatch(
+          Actions.updateCore(updatedData, this.s as JsonSchema, this.ui));
+      }
+
+    },
     fetchAddress (id: string) {
       const url = new URL(env().ADDRESS_URL)
       const params = { locationid: id } // or:
@@ -121,6 +153,9 @@ export const customRenderer = defineComponent({
     },
     getAddress (e: number) {
       const id = e.toString()
+      if (lat) {
+        this.clearAddress('addresses.0')
+      }
       this.fetchAddress(id)
     }
   },

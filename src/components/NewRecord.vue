@@ -84,9 +84,9 @@ export default defineComponent({
             alert('ERROR in response: ' + response)
           }
         }).catch((error) => {
-          alert('GENERATEID microservice is offline: ' + error)
-        })
-      })
+          alert("ERROR accessing response from GENERATE ID microservice: " + error)
+        });
+      });
     },
     async download () {
       await this.getRORId()
