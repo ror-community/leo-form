@@ -39,19 +39,19 @@ import {
   Actions,
   Tester,
   optionIs,
-} from '@jsonforms/core';
+  CoreActions
+} from '@jsonforms/core'
 import { defineComponent, inject } from '@vue/composition-api'
 import {
   rendererProps,
   useJsonFormsControl,
-  RendererProps,
-} from '@jsonforms/vue2';
-import { ControlWrapper } from '@jsonforms/vue2-vuetify';
-import { useVuetifyControl } from '@jsonforms/vue2-vuetify';
-import { VAutocomplete, VHover } from 'vuetify/lib';
-import { CoreActions } from '@jsonforms/core';
-import codes from 'iso-language-codes';
+  RendererProps
+} from '@jsonforms/vue2'
+import { ControlWrapper, useVuetifyControl } from '@jsonforms/vue2-vuetify'
 
+import { VAutocomplete, VHover } from 'vuetify/lib'
+
+import codes from 'iso-language-codes'
 
 export const showLanguageRenderer = defineComponent({
   name: 'language-renderer',
@@ -62,51 +62,50 @@ export const showLanguageRenderer = defineComponent({
     VHover
   },
   props: {
-    ...rendererProps<ControlElement>(),
+    ...rendererProps<ControlElement>()
   },
-  setup(props: RendererProps<ControlElement>) {
-    const dispatch = inject<Dispatch<CoreActions>>('dispatch');
+  setup (props: RendererProps<ControlElement>) {
+    const dispatch = inject<Dispatch<CoreActions>>('dispatch')
     const vControl = useVuetifyControl(
       useJsonFormsControl(props),
       (value) => parseInt(value, 10) || undefined
-    );
-    return { ...vControl, dispatch };
+    )
+    return { ...vControl, dispatch }
   },
   data: () => ({
     iso639: ''
   }),
   computed: {
-    getLang(): any[] {
-      let lang = []
+    getLang (): any[] {
+      const lang = []
       for (const code in codes) {
-        let name = codes[code].name
-        let iso639 = codes[code].iso639_1
-        lang.push({iso639: iso639, name: name})
+        const name = codes[code].name
+        const iso639 = codes[code].iso639_1
+        lang.push({ iso639: iso639, name: name })
       }
       return lang
     },
-    step(): number {
-      const options: any = this.appliedOptions;
-      return options.step ?? 1;
-    },
+    step (): number {
+      const options: any = this.appliedOptions
+      return options.step ?? 1
+    }
   },
   methods: {
-    onChange(e: string) {
-     console.log('me: ', this.control.path)
-     if (this.dispatch) {
-        this.dispatch(Actions.update(this.control.path, () => e));
-     }
+    onChange (e: string) {
+      console.log('me: ', this.control.path)
+      if (this.dispatch) {
+        this.dispatch(Actions.update(this.control.path, () => e))
+      }
     }
   }
-});
+})
 
 export default showLanguageRenderer
 
 const langCodeTester: Tester = optionIs('langCode', true)
 
-
 export const langEntry: JsonFormsRendererRegistryEntry = {
   renderer: showLanguageRenderer,
-  tester: rankWith(10, langCodeTester),
-};
+  tester: rankWith(10, langCodeTester)
+}
 </script>

@@ -38,28 +38,28 @@ export default {
     }
   },
   methods: {
-    testMe(v) {
+    testMe (v) {
       console.log('V: ', v)
     },
-    findROR(val) {
+    findROR (val) {
       if (val?.length < 3) {
         return
       }
       this.fetchEntriesDebounced(val)
     },
-    clearResults() {
+    clearResults () {
       this.entries = []
     },
-    pickRecord(ror) {
+    pickRecord (ror) {
       router.push({
         name: 'ExistingRecord',
         params: {
           item: ror
         }
-      });
+      })
     },
     setActive (index) {
-      this.current = index,
+      this.current = index
       console.log('HERE: ', this.current)
     },
     activeClass (index) {
@@ -79,9 +79,9 @@ export default {
         .then(res => res.json())
         .then(res => {
           const { items } = res
-          this.hasItems = items.length > 0 ? true : false
+          this.hasItems = items.length > 0
           this.current = -1
-          this.entries = items.slice(0,5)
+          this.entries = items.slice(0, 5)
         })
         .catch(err => {
           console.log(err)
