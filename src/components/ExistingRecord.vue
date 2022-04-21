@@ -68,10 +68,6 @@ export default defineComponent({
       router.push({
         name: 'NewRecord'
       })
-    } else {
-        if(this.data.addresses[0].geonames_city.id){
-            customRenderer.methods.getAddress(this.data.addresses[0].geonames_city.id)
-        }
     }
   },
   methods: {
@@ -84,6 +80,9 @@ export default defineComponent({
       return fname
     },
     onChange (event: JsonFormsChangeEvent) {
+      if(event.data.addresses[0].geonames_city.id){
+        customRenderer?.methods?.getAddress(event.data.addresses[0].geonames_city.id)
+      }
       this.data = event.data
       this.errors.value = event.errors
       this.validForm = this.errors.value?.length === 0
