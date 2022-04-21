@@ -23,7 +23,7 @@ import { defineComponent, ref, Ref } from '@vue/composition-api'
 import { ErrorObject } from 'ajv'
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue2'
 import { createAjv, vuetifyRenderers } from '@jsonforms/vue2-vuetify'
-import { entry } from './CustomRenderer.vue'
+import { entry, customRenderer } from './CustomRenderer.vue'
 import { langEntry } from './ShowLanguageRenderer.vue'
 import { typeEntry } from './ShowTypes.vue'
 import { genListEntry } from './GenerateListRenderer.vue'
@@ -68,6 +68,10 @@ export default defineComponent({
       router.push({
         name: 'NewRecord'
       })
+    } else {
+        if(this.data.addresses[0].geonames_city.id){
+            customRenderer.methods.getAddress(this.data.addresses[0].geonames_city.id)
+        }
     }
   },
   methods: {
