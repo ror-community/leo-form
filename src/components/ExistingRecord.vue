@@ -60,7 +60,7 @@ export default defineComponent({
       id: this.$route.query.id,
       data: this.$route.params.item,
       errors: errors,
-      validForm
+      validForm,
     }
   },
   mounted () {
@@ -68,6 +68,12 @@ export default defineComponent({
       router.push({
         name: 'NewRecord'
       })
+    } else {
+      //hack to force CustomRenderer component to render so that address can be updated on existing record
+      const listEl = document.querySelector(".v-list-item.v-list-item--dense.v-list-item--link.theme--light.list-with-detail-item")
+      if(listEl){
+        listEl.dispatchEvent(new Event("click"))
+      }
     }
   },
   methods: {
@@ -80,9 +86,6 @@ export default defineComponent({
       return fname
     },
     onChange (event: JsonFormsChangeEvent) {
-      if(event.data.addresses[0].geonames_city.id){
-        customRenderer?.methods?.getAddress(event.data.addresses[0].geonames_city.id)
-      }
       this.data = event.data
       this.errors.value = event.errors
       this.validForm = this.errors.value?.length === 0

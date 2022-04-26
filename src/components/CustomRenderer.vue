@@ -75,6 +75,12 @@ export const customRenderer = defineComponent({
     )
     return { ...vControl, dispatch, jsonforms, s, ui }
   },
+  mounted () {
+    // if it's an existing record update the address
+    if (this.jsonforms?.core?.data.addresses[0].geonames_city.id) {
+      this.getAddress(this.jsonforms?.core?.data.addresses[0].geonames_city.id)
+    }
+  },
   methods: {
     ignoreFields() {
       return ["line", "postcode", "primary", "state", "state_code"]
