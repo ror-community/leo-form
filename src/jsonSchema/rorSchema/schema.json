@@ -226,16 +226,16 @@
               }
             }
           },
+          "city": {
+            "type": "string",
+            "readOnly": true
+          },
           "lat": {
             "type": "number",
             "readOnly": true
           },
           "lng": {
             "type": "number",
-            "readOnly": true
-          },
-          "city": {
-            "type": "string",
             "readOnly": true
           },
           "state_code": {
@@ -385,7 +385,7 @@
       }
     },
     "established": {
-      "type": ["null", "number"],
+      "type": ["null", "integer"],
       "default": null
     },
     "relationships": {
