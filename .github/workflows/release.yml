@@ -2,9 +2,6 @@ name: Release
 on:
   release:
     types: [published]
-  paths-ignore:
-    - '**/README.md'
-    - '**/workflows/**'
 jobs:
   run:
     runs-on: ubuntu-latest
