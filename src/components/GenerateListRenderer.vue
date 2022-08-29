@@ -42,18 +42,17 @@ import {
   optionIs,
   isPrimitiveArrayControl,
   and
-} from '@jsonforms/core';
+  , CoreActions
+} from '@jsonforms/core'
 import { defineComponent, inject } from '@vue/composition-api'
 import {
   rendererProps,
   useJsonFormsControl,
-  RendererProps,
-} from '@jsonforms/vue2';
-import { ControlWrapper } from '@jsonforms/vue2-vuetify';
-import { useVuetifyControl } from '@jsonforms/vue2-vuetify';
-import { VCombobox, VHover } from 'vuetify/lib';
-import { CoreActions } from '@jsonforms/core';
+  RendererProps
+} from '@jsonforms/vue2'
+import { ControlWrapper, useVuetifyControl } from '@jsonforms/vue2-vuetify'
 
+import { VCombobox, VHover } from 'vuetify/lib'
 
 export const genListRenderer = defineComponent({
   name: 'list-renderer',
@@ -64,39 +63,38 @@ export const genListRenderer = defineComponent({
     VHover
   },
   props: {
-    ...rendererProps<ControlElement>(),
+    ...rendererProps<ControlElement>()
   },
-  setup(props: RendererProps<ControlElement>) {
-    const dispatch = inject<Dispatch<CoreActions>>('dispatch');
+  setup (props: RendererProps<ControlElement>) {
+    const dispatch = inject<Dispatch<CoreActions>>('dispatch')
     const vControl = useVuetifyControl(
       useJsonFormsControl(props),
       (value) => parseInt(value, 10) || undefined
-    );
-    return { ...vControl, dispatch };
+    )
+    return { ...vControl, dispatch }
   },
   computed: {
-    step(): number {
-      const options: any = this.appliedOptions;
+    step (): number {
+      const options: any = this.appliedOptions
       console.log(this.appliedOptions)
-      return options.step ?? 1;
-    },
+      return options.step ?? 1
+    }
   },
   methods: {
-    onChange(e: string) {
-     if (this.dispatch ) {
-        this.dispatch(Actions.update(this.control.path, () => e));
-     }
+    onChange (e: string) {
+      if (this.dispatch) {
+        this.dispatch(Actions.update(this.control.path, () => e))
+      }
     }
   }
-});
+})
 
 export default genListRenderer
 
 const genListTester: Tester = and(optionIs('genList', true), isPrimitiveArrayControl)
 
-
 export const genListEntry: JsonFormsRendererRegistryEntry = {
   renderer: genListRenderer,
-  tester: rankWith(10, genListTester),
-};
+  tester: rankWith(10, genListTester)
+}
 </script>

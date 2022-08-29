@@ -10,9 +10,9 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-        path: '/',
-        name: 'Main',
-        component: Main
+      path: '/',
+      name: 'Main',
+      component: Main
     },
     {
       path: '/new',
@@ -20,10 +20,10 @@ export default new Router({
       component: NewRecord
     },
     {
-        path: '/exist',
-        name: 'ExistingRecord',
-        component: ExistingRecord,
-        props: true
+      path: '/exist',
+      name: 'ExistingRecord',
+      component: ExistingRecord,
+      props: true
     }
   ]
 })

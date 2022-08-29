@@ -38,18 +38,17 @@ import {
   Actions,
   Tester,
   optionIs,
-} from '@jsonforms/core';
+  CoreActions
+} from '@jsonforms/core'
 import { defineComponent, inject } from '@vue/composition-api'
 import {
   rendererProps,
   useJsonFormsControl,
-  RendererProps,
-} from '@jsonforms/vue2';
-import { ControlWrapper } from '@jsonforms/vue2-vuetify';
-import { useVuetifyControl } from '@jsonforms/vue2-vuetify';
-import { VSelect, VHover } from 'vuetify/lib';
-import { CoreActions } from '@jsonforms/core';
+  RendererProps
+} from '@jsonforms/vue2'
+import { ControlWrapper, useVuetifyControl } from '@jsonforms/vue2-vuetify'
 
+import { VSelect, VHover } from 'vuetify/lib'
 
 export const showTypeRenderer = defineComponent({
   name: 'type-renderer',
@@ -60,38 +59,37 @@ export const showTypeRenderer = defineComponent({
     VHover
   },
   props: {
-    ...rendererProps<ControlElement>(),
+    ...rendererProps<ControlElement>()
   },
-  setup(props: RendererProps<ControlElement>) {
-    const dispatch = inject<Dispatch<CoreActions>>('dispatch');
+  setup (props: RendererProps<ControlElement>) {
+    const dispatch = inject<Dispatch<CoreActions>>('dispatch')
     const vControl = useVuetifyControl(
       useJsonFormsControl(props),
       (value) => parseInt(value, 10) || undefined
-    );
-    return { ...vControl, dispatch };
+    )
+    return { ...vControl, dispatch }
   },
   computed: {
-    step(): number {
-      const options: any = this.appliedOptions;
-      return options.step ?? 1;
-    },
+    step (): number {
+      const options: any = this.appliedOptions
+      return options.step ?? 1
+    }
   },
   methods: {
-    onChange(e: string) {
-     if (this.dispatch) {
-        this.dispatch(Actions.update(this.control.path, () => e));
-     }
+    onChange (e: string) {
+      if (this.dispatch) {
+        this.dispatch(Actions.update(this.control.path, () => e))
+      }
     }
   }
-});
+})
 
 export default showTypeRenderer
 
 const typeTester: Tester = optionIs('type', true)
 
-
 export const typeEntry: JsonFormsRendererRegistryEntry = {
   renderer: showTypeRenderer,
-  tester: rankWith(10, typeTester),
-};
+  tester: rankWith(10, typeTester)
+}
 </script>
