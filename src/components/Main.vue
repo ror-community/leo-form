@@ -33,9 +33,6 @@ export default {
   methods: {
     showTypeAhead () {
       this.isExisting = true
-    },
-    passRorId () {
-      return '/exist/1234'
     }
   }
 }
