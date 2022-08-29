@@ -39,7 +39,7 @@ jobs:
           text: "A new version of the <https://leo.dev.ror.org|LEO FORM> is deployed to dev."
           failure_text: '${env.GITHUB_WORKFLOW} (${env.GITHUB_RUN_NUMBER}) build failed'
           fields: |
-            [{ "title": "Committed by", "value": "<https://github.com/ror-community/ror-site/commits?author=${{ github.actor }}|${{ github.actor }}>", "short": true },
-              { "title": "Commit SHA", "value": "<https://github.com/ror-community/ror-site/commit/${{ steps.extract_variables.outputs.GIT_SHA }}|${{ steps.extract_variables.outputs.GIT_SHA_SHORT }}>", "short": true },
+            [{ "title": "Committed by", "value": "<https://github.com/ror-community/leo-form/commits?author=${{ github.actor }}|${{ github.actor }}>", "short": true },
+              { "title": "Commit SHA", "value": "<https://github.com/ror-community/leo-form/commit/${{ steps.extract_variables.outputs.GIT_SHA }}|${{ steps.extract_variables.outputs.GIT_SHA_SHORT }}>", "short": true },
               { "title": "Repository", "value": "<https://github.com/${{ github.repository }}|${{ github.repository }}>", "short": true },
-              { "title": "Branch", "value": "<https://github.com/ror-community/ror-site/tree/${{ steps.extract_variables.outputs.BRANCH }}|${{ steps.extract_variables.outputs.BRANCH }}>", "short": true }]
+              { "title": "Branch", "value": "<https://github.com/ror-community/leo-form/tree/${{ steps.extract_variables.outputs.BRANCH }}|${{ steps.extract_variables.outputs.BRANCH }}>", "short": true }]
