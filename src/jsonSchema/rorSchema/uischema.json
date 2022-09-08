@@ -334,16 +334,6 @@
       "elements": [
         {
           "type": "Control",
-          "label": "Status",
-          "scope": "#/properties/status"
-        }
-      ]
-    },
-    {
-      "type": "VerticalLayout",
-      "elements": [
-        {
-          "type": "Control",
           "label": "ROR ID",
           "scope": "#/properties/id"
         }
