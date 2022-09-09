@@ -18,8 +18,9 @@ jobs:
         run: npm ci
       - name: Pull ROR Schema
         run:  |
+          git submodule update --init --recursive;
           cd ror-schema;
-          git pull origin dev
+          git checkout dev
       - name: Build
         run:  |
           cp src/env.dev.ts src/env.ts;
