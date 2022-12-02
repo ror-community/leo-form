@@ -26,7 +26,8 @@
         },
         {
           "type": "Control",
-          "scope": "#/properties/wikipedia_url"
+          "scope": "#/properties/status",
+          "label": "Status"
         }
       ]
     },
@@ -47,6 +48,15 @@
           "options": {
             "genList": true
           }
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/wikipedia_url"
         },
         {
           "type": "Control",
@@ -316,16 +326,6 @@
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      "type": "VerticalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "label": "Status",
-          "scope": "#/properties/status"
         }
       ]
     },

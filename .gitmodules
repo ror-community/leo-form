@@ -1,0 +1,3 @@
+[submodule "ror-schema"]
+	path = ror-schema
+	url = https://github.com/ror-community/ror-schema
