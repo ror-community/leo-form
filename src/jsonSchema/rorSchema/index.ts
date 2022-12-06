@@ -1,4 +1,4 @@
-import schema from './schema.json'
+import schema from './ror_schema.json'
 import data from './data.json'
 import uischema from './uischema.json'
 import { UISchemaElement, JsonSchema } from '@jsonforms/core'
